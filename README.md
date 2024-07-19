@@ -1,4 +1,4 @@
-# alchemy-engines
+# Alchemy Engines
 Alchemy Engines is a turn-based tactical roleplaying game about leading a mobile settlement of survivors through a wasteland plagued with shadow beasts. The survivors use alchemy engines, vehicles that run off potions brewed on an industrial scale. The survivors battle these beasts from alchemy engines to clear a path for the settlement.
 
 On the tactical layer, the player will command a squad of vehicles on a square grid map in turn-based battles. This will involve movement, attacks, environmental interactions, and decision making to address enemies positioned on the map. The player can either complete the objective through commanding their squad or see all squad members be defeated. 
