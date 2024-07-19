@@ -6,8 +6,9 @@ extends Node2D
 @onready var TURN_SERVICE: TurnService = $TurnService
 # Reference to tilemap node
 @onready var MAP: TileMap = $Environment/Map
-# Reference to player node
-@onready var PLAYER: Sprite2D = $Player
+# Reference to player controller
+@onready var PLAYER: Pawn = $PlayerController/Player
+@onready var PLAYER_CONTROLLER: PlayerController = $PlayerController
 
 # Stores the map tiles that are in the path chosen by cursor
 # hover.
@@ -23,6 +24,9 @@ func _ready():
 	# Connection of points, edge weights, etc.
 	NAV_SERVICE.build_astar_map(MAP, 0)
 	NAV_SERVICE.update_logical_map(PLAYER, Vector2i(0,0))
+	
+	PLAYER_CONTROLLER.snap_units(MAP)
+	print(TURN_SERVICE.populate_initiative([PLAYER]))
 	
 func _input(event):
 	if event is InputEventMouseMotion and not is_move_step:

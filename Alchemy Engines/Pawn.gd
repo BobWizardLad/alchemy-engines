@@ -3,12 +3,14 @@ class_name Pawn
 
 @onready var motion_tween: Tween
 
+@export var initiative: float
+
 var grid_pos: Vector2i
 
 signal move_step_finished
 
 func _ready():
-	connect("move_step_finished", get_parent()._end_player_move_step)
+	connect("move_step_finished", get_parent().get_parent()._end_player_move_step)
 
 # path is a list of points handed to the move command.
 # map is the tilemap being naviated
