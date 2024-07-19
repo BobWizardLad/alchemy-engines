@@ -4,11 +4,13 @@ class_name TurnService
 # Turn order 0 == player | 1 == enemy
 @export var turn: int = 0
 
-var turn_order: Array[Pawn] = []
+var turn_order: Array[Node] = []
+
+signal start_new_turn
 
 # Call to determine turn order within the units provided by parameter
 # WARNING this will wipe the previous turn order.
-func populate_initiative(units: Array[Pawn]) -> Array[Pawn]:
+func populate_initiative(units: Array[Node]) -> Array[Node]:
 	turn_order = [] # Wipe old turn order
 	
 	for each in units:
@@ -25,22 +27,17 @@ func populate_initiative(units: Array[Pawn]) -> Array[Pawn]:
 					continue # Do nothing if still traversing
 	return turn_order
 
-# Execute player turn
-func player_turn():
-	pass
-
-# Execute enemy turn
-func enemy_turn():
-	pass
-
-# Return the current turn
-func get_current_turn() -> int:
-	return turn
+# Return the current turn's pawn
+func get_current_turn_pawn() -> Pawn:
+	return turn_order[turn]
 
 # Change the current turn
 func change_turn() -> Node2D:
-	if turn == 0:
-		turn = 1
-	elif turn == 1:
+	if turn < turn_order.size()-1:
+		turn += 1
+	elif turn > turn_order.size()-1:
 		turn = 0
+	else:
+		turn = 0
+	
 	return self

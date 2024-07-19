@@ -60,7 +60,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_4wuhy")
 offset = Vector2(0, -30)
 script = ExtResource("5_uy2mm")
-initiative = 3.0
+initiative = 1.0
 
 [node name="Player2" type="Sprite2D" parent="PlayerController"]
 position = Vector2(158, 15)
@@ -68,7 +68,7 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_4wuhy")
 offset = Vector2(0, -30)
 script = ExtResource("5_uy2mm")
-initiative = 5.0
+initiative = 1.0
 
 [node name="Player3" type="Sprite2D" parent="PlayerController"]
 position = Vector2(147, 145)
@@ -79,17 +79,15 @@ script = ExtResource("5_uy2mm")
 initiative = 1.0
 
 [node name="Player4" type="Sprite2D" parent="PlayerController"]
-position = Vector2(-38, 74)
+position = Vector2(-37, 75)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_4wuhy")
 offset = Vector2(0, -30)
 script = ExtResource("5_uy2mm")
-initiative = 2.0
+initiative = 1.0
 
 [node name="DebugLabel" type="Label" parent="."]
 offset_left = -269.0
 offset_top = -204.0
 offset_right = -229.0
 offset_bottom = -181.0
-
-[connection signal="start_new_turn" from="TurnService" to="." method="_on_turn_service_start_new_turn"]

@@ -33,6 +33,7 @@ script = ExtResource("1_he3ci")
 
 [node name="TurnService" type="Node2D" parent="."]
 script = ExtResource("2_eknaf")
+turn = null
 
 [node name="NavService" type="Node2D" parent="."]
 script = ExtResource("6_ywr2q")

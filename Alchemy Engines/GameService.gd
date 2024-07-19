@@ -10,6 +10,8 @@ extends Node2D
 @onready var PLAYER: Pawn = $PlayerController/Player
 @onready var PLAYER_CONTROLLER: PlayerController = $PlayerController
 
+var player: Pawn
+
 # Stores the map tiles that are in the path chosen by cursor
 # hover.
 var map_tiles_active: PackedVector2Array
@@ -23,16 +25,17 @@ func _ready():
 	# Inital building of the ASTAR graph
 	# Connection of points, edge weights, etc.
 	NAV_SERVICE.build_astar_map(MAP, 0)
-	NAV_SERVICE.update_logical_map(PLAYER, Vector2i(0,0))
+	NAV_SERVICE.update_logical_map(player, Vector2i(0,0))
 	
 	PLAYER_CONTROLLER.snap_units(MAP)
-	print(TURN_SERVICE.populate_initiative([PLAYER]))
+	print(TURN_SERVICE.populate_initiative(PLAYER_CONTROLLER.get_children()))
+	player = TURN_SERVICE.get_current_turn_pawn()
 	
 func _input(event):
 	if event is InputEventMouseMotion and not is_move_step:
 		# Clear prior planned path tint and make new path
 		MAP.clear_layer(1)
-		map_tiles_active = NAV_SERVICE.get_astar_path(MAP.local_to_map(PLAYER.position), MAP.local_to_map(get_local_mouse_position()))
+		map_tiles_active = NAV_SERVICE.get_astar_path(MAP.local_to_map(player.position), MAP.local_to_map(get_local_mouse_position()))
 		# Vis Layer ID, Img Src ID, Atlas Pos, Path
 		MAP.show_planned_path(1, 0, Vector2(4, 0), map_tiles_active)
 	else:
@@ -40,12 +43,16 @@ func _input(event):
 	if event is InputEventMouseButton:
 		# Disable player input and call a pawn move
 		is_move_step = true
-		PLAYER.pawn_move(MAP, NAV_SERVICE.get_astar_path(MAP.local_to_map(PLAYER.position), MAP.local_to_map(get_local_mouse_position())))
+		player.pawn_move(MAP, NAV_SERVICE.get_astar_path(MAP.local_to_map(player.position), MAP.local_to_map(get_local_mouse_position())))
 
 func _end_player_move_step():
 	is_move_step = false
-	display_debug_label(str(TURN_SERVICE.get_current_turn()))
 	TURN_SERVICE.change_turn()
+	print_debug(TURN_SERVICE.turn)
+	player = TURN_SERVICE.get_current_turn_pawn()
 
 func display_debug_label(msg: String) -> void:
 	$DebugLabel.text = msg
+
+func _on_turn_service_start_new_turn(pawn_turn: Node):
+	pass # Replace with function body.
