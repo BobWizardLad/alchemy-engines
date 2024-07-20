@@ -1,11 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://be2twwdyeduvb"]
+[gd_scene load_steps=12 format=3 uid="uid://be2twwdyeduvb"]
 
 [ext_resource type="Texture2D" uid="uid://bpiomleg6q6cq" path="res://assets/IsoTileMap.png" id="1_28q0j"]
 [ext_resource type="Script" path="res://GameService.gd" id="1_he3ci"]
 [ext_resource type="Texture2D" uid="uid://mo7dyp6od8t5" path="res://assets/knight.png" id="2_4wuhy"]
 [ext_resource type="Script" path="res://TurnService.gd" id="2_eknaf"]
 [ext_resource type="Script" path="res://TacticsTileMap.gd" id="3_oa8ik"]
-[ext_resource type="Script" path="res://AstarService.gd" id="4_krdri"]
 [ext_resource type="Script" path="res://Pawn.gd" id="5_uy2mm"]
 [ext_resource type="Script" path="res://PlayerController.gd" id="6_e71m8"]
 [ext_resource type="Script" path="res://NavService.gd" id="6_ywr2q"]
@@ -30,7 +29,7 @@ custom_data_layer_0/name = "walkable"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_6kye6")
 
-[node name="GameService" type="Node2D"]
+[node name="CombatInstance" type="Node2D"]
 script = ExtResource("1_he3ci")
 
 [node name="TurnService" type="Node2D" parent="."]
@@ -39,10 +38,9 @@ script = ExtResource("2_eknaf")
 [node name="NavService" type="Node2D" parent="."]
 script = ExtResource("6_ywr2q")
 
-[node name="AstarService" type="Node2D" parent="NavService"]
-script = ExtResource("4_krdri")
+[node name="Environment" type="Node2D" parent="."]
 
-[node name="Map" type="TileMap" parent="NavService"]
+[node name="Map" type="TileMap" parent="Environment"]
 y_sort_enabled = true
 tile_set = SubResource("TileSet_eo1nr")
 format = 2
@@ -52,7 +50,7 @@ layer_1/y_sort_enabled = true
 layer_1/tile_data = PackedInt32Array()
 script = ExtResource("3_oa8ik")
 
-[node name="LogicalMap" type="Node" parent="NavService"]
+[node name="LogicalMap" type="Node" parent="Environment"]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(277, 91)
@@ -71,7 +69,7 @@ script = ExtResource("5_uy2mm")
 initiative = 5.0
 
 [node name="Player3" type="Sprite2D" parent="PlayerController"]
-position = Vector2(158, 141)
+position = Vector2(147, 145)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_4wuhy")
 offset = Vector2(0, -30)
@@ -87,9 +85,9 @@ script = ExtResource("5_uy2mm")
 initiative = 2.0
 
 [node name="DebugLabel" type="Label" parent="."]
-offset_left = -96.0
-offset_top = -67.0
-offset_right = -56.0
-offset_bottom = -44.0
+offset_left = -269.0
+offset_top = -204.0
+offset_right = -229.0
+offset_bottom = -181.0
 
 [connection signal="start_new_turn" from="TurnService" to="." method="_on_turn_service_start_new_turn"]
