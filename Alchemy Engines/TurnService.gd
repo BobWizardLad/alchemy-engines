@@ -20,10 +20,10 @@ func populate_initiative(units: Array[Node]) -> Array[Node]:
 			for i in range(0, turn_order.size()+1):
 				if i == turn_order.size():
 					turn_order.append(each) # Append to end if largest init
-				elif each.initiative <= turn_order[i].initiative:
+				elif each.current_initiative <= turn_order[i].current_initiative:
 					turn_order.insert(i, each) # Insert in front of current init
 					break
-				elif each.initiative > turn_order[i].initiative:
+				elif each.current_initiative > turn_order[i].current_initiative:
 					continue # Do nothing if still traversing
 	return turn_order
 

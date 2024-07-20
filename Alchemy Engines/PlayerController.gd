@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 class_name PlayerController
 
 signal move_step_finished

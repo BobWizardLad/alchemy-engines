@@ -1,12 +1,18 @@
 [gd_scene load_steps=3 format=3 uid="uid://c8uqmrl2y1tnd"]
 
-[ext_resource type="Texture2D" uid="uid://mo7dyp6od8t5" path="res://assets/knight.png" id="1_pj276"]
+[ext_resource type="Texture2D" uid="uid://c86pymncn7od5" path="res://assets/ProtagFastIdle.png" id="1_2p0gm"]
 [ext_resource type="Script" path="res://Pawn.gd" id="2_kywyg"]
 
 [node name="Player" type="Sprite2D"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_pj276")
+z_index = 1
+y_sort_enabled = true
+texture = ExtResource("1_2p0gm")
 offset = Vector2(0, -30)
+hframes = 5
+vframes = 2
 script = ExtResource("2_kywyg")
 HEALTH_MAX = 24.0
-initiative = 3.0
+ARMOR_MAX = 10.0
+DAMAGE = 10
+SPECIAL_DAMAGE = 25
+INITIATIVE = 4.0
