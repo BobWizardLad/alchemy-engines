@@ -1,8 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://be2twwdyeduvb"]
+[gd_scene load_steps=15 format=3 uid="uid://be2twwdyeduvb"]
 
 [ext_resource type="Texture2D" uid="uid://bpiomleg6q6cq" path="res://assets/IsoTileMap.png" id="1_28q0j"]
 [ext_resource type="Script" path="res://GameService.gd" id="1_he3ci"]
-[ext_resource type="Texture2D" uid="uid://mo7dyp6od8t5" path="res://assets/knight.png" id="2_4wuhy"]
 [ext_resource type="Script" path="res://TurnService.gd" id="2_eknaf"]
 [ext_resource type="Script" path="res://TacticsTileMap.gd" id="3_oa8ik"]
 [ext_resource type="Script" path="res://AstarService.gd" id="4_krdri"]
@@ -10,6 +9,9 @@
 [ext_resource type="Script" path="res://PlayerController.gd" id="6_e71m8"]
 [ext_resource type="Script" path="res://NavService.gd" id="6_ywr2q"]
 [ext_resource type="PackedScene" uid="uid://c8uqmrl2y1tnd" path="res://player.tscn" id="7_4cdsd"]
+[ext_resource type="Texture2D" uid="uid://cxaqvc8efeugn" path="res://assets/ProtagBiggIdle.png" id="9_6jath"]
+[ext_resource type="Texture2D" uid="uid://c86pymncn7od5" path="res://assets/ProtagFastIdle.png" id="10_d3e1d"]
+[ext_resource type="Texture2D" uid="uid://c8em6lxls3rs8" path="res://assets/ProtagHelpIdle.png" id="12_23s2i"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6kye6"]
 texture = ExtResource("1_28q0j")
@@ -61,28 +63,37 @@ position = Vector2(277, 91)
 script = ExtResource("6_e71m8")
 
 [node name="Player" parent="PlayerController" instance=ExtResource("7_4cdsd")]
+texture = ExtResource("9_6jath")
+hframes = 5
+vframes = 2
 
 [node name="Player2" type="Sprite2D" parent="PlayerController"]
 position = Vector2(158, 15)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_4wuhy")
+texture = ExtResource("10_d3e1d")
 offset = Vector2(0, -30)
+hframes = 5
+vframes = 2
 script = ExtResource("5_uy2mm")
 initiative = 5.0
 
 [node name="Player3" type="Sprite2D" parent="PlayerController"]
 position = Vector2(158, 141)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_4wuhy")
+texture = ExtResource("12_23s2i")
 offset = Vector2(0, -30)
+hframes = 5
+vframes = 2
 script = ExtResource("5_uy2mm")
 initiative = 1.0
 
 [node name="Player4" type="Sprite2D" parent="PlayerController"]
-position = Vector2(-38, 74)
+position = Vector2(-30, 81)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_4wuhy")
+texture = ExtResource("9_6jath")
 offset = Vector2(0, -30)
+hframes = 5
+vframes = 2
 script = ExtResource("5_uy2mm")
 initiative = 2.0
 
