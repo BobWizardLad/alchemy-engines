@@ -1,5 +1,8 @@
 extends Node2D
-
+# Camera for scene
+@onready var CAMERA: Camera2D = $CombatCamera
+# Combat UI handler
+@onready var UI: Control = $CombatCamera/UI
 # Service to handle map and Astar services
 @onready var NAV_SERVICE: NavService = $NavService
 # Turn order is orchestrated by TurnService node
@@ -21,6 +24,12 @@ func _ready():
 	player = TURN_SERVICE.get_current_turn_pawn()
 	NAV_SERVICE.build_astar_map(0)
 	
+	CAMERA.focus_next_unit(player)
+
+func _process(_delta) -> void:
+	if is_move_step:
+		UI.hide_actions_menu()
+
 func _input(event):
 	if event is InputEventMouseMotion and not is_move_step:
 		# Clear prior planned path tint and make new path
@@ -39,6 +48,7 @@ func _end_player_move_step():
 	TURN_SERVICE.change_turn()
 	display_debug_label(str(TURN_SERVICE.turn))
 	player = TURN_SERVICE.get_current_turn_pawn()
+	CAMERA.focus_next_unit(player)
 
 func _on_turn_service_start_new_turn(pawn_turn: Node):
 	pass

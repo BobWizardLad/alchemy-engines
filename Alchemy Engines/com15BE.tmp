@@ -60,26 +60,26 @@ script = ExtResource("3_oa8ik")
 
 [node name="CombatCamera" type="Camera2D" parent="."]
 position = Vector2(238, 114)
+zoom = Vector2(1.5, 1.5)
 script = ExtResource("7_s1tf4")
 
 [node name="UI" type="Control" parent="CombatCamera"]
 z_index = 1
 layout_mode = 3
-anchors_preset = 0
-offset_left = -536.0
-offset_top = 157.0
-offset_right = -536.0
-offset_bottom = 157.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
 script = ExtResource("7_4s5bv")
 
 [node name="ActionsMenu" type="Control" parent="CombatCamera/UI"]
 custom_minimum_size = Vector2(300, 200)
 anchors_preset = 0
-offset_left = -40.0
-offset_top = 17.0
-offset_right = 260.0
-offset_bottom = 217.0
-scale = Vector2(0.75, 0.75)
+offset_right = 300.0
+offset_bottom = 200.0
+scale = Vector2(0.25, 0.25)
 
 [node name="ActionsLower" type="TextureRect" parent="CombatCamera/UI/ActionsMenu"]
 modulate = Color(1, 1, 1, 0.223529)
@@ -97,16 +97,9 @@ texture = ExtResource("8_o73a7")
 
 [node name="Options" type="VBoxContainer" parent="CombatCamera/UI/ActionsMenu"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 4
 anchor_top = 0.5
-anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -66.0
-offset_top = -79.0
-offset_right = 66.0
-offset_bottom = 79.0
-grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
