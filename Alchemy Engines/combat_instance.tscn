@@ -62,24 +62,18 @@ script = ExtResource("3_oa8ik")
 position = Vector2(238, 114)
 script = ExtResource("7_s1tf4")
 
-[node name="UI" type="Control" parent="CombatCamera"]
+[node name="UI" type="HBoxContainer" parent="CombatCamera"]
 z_index = 1
-layout_mode = 3
-anchors_preset = 0
-offset_left = -536.0
-offset_top = 157.0
-offset_right = -536.0
-offset_bottom = 157.0
+offset_left = -576.0
+offset_top = 123.0
+offset_right = -272.0
+offset_bottom = 323.0
 script = ExtResource("7_4s5bv")
 
 [node name="ActionsMenu" type="Control" parent="CombatCamera/UI"]
+clip_contents = true
 custom_minimum_size = Vector2(300, 200)
-anchors_preset = 0
-offset_left = -40.0
-offset_top = 17.0
-offset_right = 260.0
-offset_bottom = 217.0
-scale = Vector2(0.75, 0.75)
+layout_mode = 2
 
 [node name="ActionsLower" type="TextureRect" parent="CombatCamera/UI/ActionsMenu"]
 modulate = Color(1, 1, 1, 0.223529)
@@ -127,6 +121,57 @@ layout_mode = 2
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 30
 text = " * Skip"
+
+[node name="ActionContextMenu" type="Control" parent="CombatCamera/UI"]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+
+[node name="ActionsLower" type="TextureRect" parent="CombatCamera/UI/ActionContextMenu"]
+modulate = Color(1, 1, 1, 0.223529)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("7_ro586")
+
+[node name="ActionsUpper" type="TextureRect" parent="CombatCamera/UI/ActionContextMenu"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("8_o73a7")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CombatCamera/UI/ActionContextMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Attack" type="Button" parent="CombatCamera/UI/ActionContextMenu/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 30
+text = " * Attack"
+
+[node name="Special" type="Button" parent="CombatCamera/UI/ActionContextMenu/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 30
+text = " * Special"
+
+[node name="Potion" type="Button" parent="CombatCamera/UI/ActionContextMenu/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 30
+text = " * Potion"
 
 [node name="PlayerController" type="Node2D" parent="."]
 y_sort_enabled = true
