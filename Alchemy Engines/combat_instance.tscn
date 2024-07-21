@@ -197,4 +197,4 @@ offset_top = -67.0
 offset_right = -56.0
 offset_bottom = -44.0
 
-[connection signal="start_new_turn" from="TurnService" to="." method="_on_turn_service_start_new_turn"]
+[connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Move" to="." method="_on_move_button_down"]
