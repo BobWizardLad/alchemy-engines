@@ -30,6 +30,9 @@ func build_astar_map(map: TileMap, layer: int) -> Node2D:
 func get_astar_path(from: Vector2i, to: Vector2i) -> PackedVector2Array:
 	return astar2d.get_point_path(astar2d.get_closest_point(from), astar2d.get_closest_point(to))
 
+func set_point_disabled(new_position: Vector2, is_disabled: bool) -> void:
+	astar2d.set_point_disabled(astar2d.get_closest_point(new_position), is_disabled)
+
 # Safe helper function to add points to an Astar2D graph
 # Accounts for next_id to assign tile IDs
 func add_point(point: Vector2i) -> Node2D:

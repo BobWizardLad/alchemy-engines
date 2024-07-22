@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://AstarService.gd" id="4_krdri"]
 [ext_resource type="Script" path="res://PlayerController.gd" id="6_e71m8"]
 [ext_resource type="Script" path="res://NavService.gd" id="6_ywr2q"]
-[ext_resource type="PackedScene" path="res://player.tscn" id="7_4cdsd"]
+[ext_resource type="PackedScene" uid="uid://wxvjnpow12ky" path="res://player.tscn" id="7_4cdsd"]
 [ext_resource type="Script" path="res://CombatUI.gd" id="7_4s5bv"]
 [ext_resource type="Texture2D" uid="uid://c3qixv0nfoqjs" path="res://assets/combat_ui_lower.png" id="7_ro586"]
 [ext_resource type="Script" path="res://CombatCamera.gd" id="7_s1tf4"]

@@ -25,4 +25,5 @@ func pawn_move(map: TileMap, path: PackedVector2Array, pawn: Pawn):
 			motion_tween = get_tree().create_tween()
 			motion_tween.tween_property(pawn, "position", map.map_to_local(each), 0.1)
 			await motion_tween.finished
+	pawn.grid_pos = path[-1]
 	emit_signal("move_step_finished")

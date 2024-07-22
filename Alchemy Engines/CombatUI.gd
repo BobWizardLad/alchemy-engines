@@ -13,4 +13,3 @@ func hide_actions_menu() -> void:
 func focus_actions_menu() -> void:
 	ACTIONS_MENU.visible = true
 
-
