@@ -35,6 +35,8 @@ func _ready():
 func _process(_delta) -> void:
 	if move_action:
 		UI.hide_actions_menu()
+	if not move_action:
+		UI.focus_actions_menu()
 
 func _input(event):
 	if move_action:
