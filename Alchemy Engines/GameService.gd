@@ -1,4 +1,6 @@
 extends Node2D
+
+
 # Camera for scene
 @onready var CAMERA: Camera2D = $CombatCamera
 # Combat UI handler
@@ -44,7 +46,8 @@ func _input(event):
 			NAV_SERVICE.MAP.clear_layer(1)
 		if event is InputEventMouseButton and NAV_SERVICE.MAP.get_used_cells(0).find(NAV_SERVICE.MAP.local_to_map(get_local_mouse_position())) != -1:
 			if not is_move_step:
-				PLAYER_CONTROLLER.pawn_move(NAV_SERVICE.MAP, NAV_SERVICE.ASTAR.get_astar_path(NAV_SERVICE.MAP.local_to_map(player.position), NAV_SERVICE.MAP.local_to_map(get_local_mouse_position())), player)
+				var path = NAV_SERVICE.ASTAR.get_astar_path(NAV_SERVICE.MAP.local_to_map(player.position), NAV_SERVICE.MAP.local_to_map(get_local_mouse_position()))
+				PLAYER_CONTROLLER.pawn_move(NAV_SERVICE.MAP, path, player)
 			# Disable player input and call a pawn move
 			is_move_step = true
 
@@ -58,7 +61,6 @@ func _end_player_move_step():
 
 func display_debug_label(msg: String) -> void:
 	$DebugLabel.text = "Turn " + msg
-
 
 func _on_move_button_down():
 	move_action = true

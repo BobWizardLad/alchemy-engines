@@ -22,3 +22,7 @@ func build_astar_map(layer: int) -> void:
 # Get path to point
 func get_astar_path(from: Vector2i, to: Vector2i) -> PackedVector2Array:
 	return get_astar_path(from, to)
+
+func change_pawn_obstacle(old_pos: Vector2, new_pos: Vector2) -> void:
+	ASTAR.set_point_disabled(old_pos, false) # Enable old position
+	ASTAR.set_point_disabled(new_pos, true) # Disable new position
