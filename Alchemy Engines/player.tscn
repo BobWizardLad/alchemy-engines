@@ -7,7 +7,7 @@
 z_index = 1
 y_sort_enabled = true
 texture = ExtResource("1_2p0gm")
-offset = Vector2(0, -30)
+offset = Vector2(0, -32)
 hframes = 5
 vframes = 2
 script = ExtResource("2_kywyg")

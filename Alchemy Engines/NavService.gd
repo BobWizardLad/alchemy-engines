@@ -12,7 +12,7 @@ var map_tiles_active: PackedVector2Array
 func update_planned_path(active_pawn_pos: Vector2) -> void:
 	MAP.clear_layer(1)
 	map_tiles_active = ASTAR.get_astar_path(MAP.local_to_map(active_pawn_pos), MAP.local_to_map(get_local_mouse_position()))
-	MAP.show_planned_path(1, 0, Vector2(4, 0), map_tiles_active)
+	MAP.show_planned_path(1, 1, Vector2(0, 0), map_tiles_active)
 
 # Build astar map with added unit locations as obstacles
 func build_astar_map(layer: int) -> void:

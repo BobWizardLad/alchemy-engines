@@ -16,7 +16,7 @@ func build_astar_map(map: TileMap, layer: int) -> Node2D:
 	# Add points to the nav that are valid to traverse
 	# Logical map is all null tiles
 	for each in map.get_used_cells(layer):
-		if map.get_cell_tile_data(layer, each).get_custom_data("walkable"):
+		if map.get_cell_tile_data(layer, each) != null && map.get_cell_tile_data(layer, each).get_custom_data("walkable"):
 			add_point(each)
 	astar_points = astar2d.get_point_ids()
 	
@@ -28,6 +28,9 @@ func build_astar_map(map: TileMap, layer: int) -> Node2D:
 
 # This function will safely pass the Astar2D's pathfinding call
 func get_astar_path(from: Vector2i, to: Vector2i) -> PackedVector2Array:
+	if astar2d.get_closest_point(from) == -1 || astar2d.get_closest_point(to) == -1:
+		print("From AStarService: Path is invalid, returning empty list")
+		return PackedVector2Array() # Send an empty one
 	return astar2d.get_point_path(astar2d.get_closest_point(from), astar2d.get_closest_point(to))
 
 func set_point_disabled(new_position: Vector2, is_disabled: bool) -> void:

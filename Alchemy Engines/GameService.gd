@@ -63,4 +63,6 @@ func display_debug_label(msg: String) -> void:
 	$DebugLabel.text = "Turn " + msg
 
 func _on_move_button_down():
+	var timer = get_tree().create_timer(0.2)
+	await timer.timeout
 	move_action = true
