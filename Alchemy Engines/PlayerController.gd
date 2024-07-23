@@ -18,12 +18,13 @@ func snap_units(map: TileMap):
 # map is the tilemap being naviated
 func pawn_move(map: TileMap, path: PackedVector2Array, pawn: Pawn):
 	var motion_tween
+	var my_path = path.slice(0, pawn.current_move)
 	if motion_tween != null and motion_tween.is_running():
 		return false
 	else:
-		for each in path:
+		for each in my_path:
 			motion_tween = get_tree().create_tween()
 			motion_tween.tween_property(pawn, "position", map.map_to_local(each), 0.1)
 			await motion_tween.finished
-	pawn.grid_pos = path[-1]
+	pawn.grid_pos = my_path[-1]
 	emit_signal("move_step_finished")

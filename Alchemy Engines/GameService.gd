@@ -12,7 +12,7 @@ extends Node2D
 # Reference to player controller
 @onready var PLAYER_CONTROLLER: PlayerController = $PlayerController
 
-var player: Pawn
+var active: Pawn
 
 # Flag to halt player input while pawn is moving
 # Player cannot input during 'move step'
@@ -27,12 +27,14 @@ func _ready():
 	
 	TURN_SERVICE.populate_initiative(PLAYER_CONTROLLER.get_children())
 	PLAYER_CONTROLLER.snap_units(NAV_SERVICE.MAP)
-	player = TURN_SERVICE.get_current_turn_pawn()
+	active = TURN_SERVICE.get_current_turn_pawn()
 	NAV_SERVICE.build_astar_map(0)
 	
-	CAMERA.focus_next_unit(player)
+	CAMERA.focus_next_unit(active)
 
 func _process(_delta) -> void:
+	display_debug_label(str(NAV_SERVICE.MAP.local_to_map(get_global_mouse_position())))
+	
 	if move_action:
 		UI.hide_actions_menu()
 	if not move_action:
@@ -42,14 +44,14 @@ func _input(event):
 	if move_action:
 		if event is InputEventMouseMotion and not is_move_step:
 			# Clear prior planned path tint and make new path
-			NAV_SERVICE.update_planned_path(player.position)
+			NAV_SERVICE.update_planned_path(active)
 		else:
 			# Call to wipe planned path visible
 			NAV_SERVICE.MAP.clear_layer(1)
 		if event is InputEventMouseButton and NAV_SERVICE.MAP.get_used_cells(0).find(NAV_SERVICE.MAP.local_to_map(get_local_mouse_position())) != -1:
 			if not is_move_step:
-				var path = NAV_SERVICE.ASTAR.get_astar_path(NAV_SERVICE.MAP.local_to_map(player.position), NAV_SERVICE.MAP.local_to_map(get_local_mouse_position()))
-				PLAYER_CONTROLLER.pawn_move(NAV_SERVICE.MAP, path, player)
+				var path = NAV_SERVICE.ASTAR.get_astar_path(NAV_SERVICE.MAP.local_to_map(active.position), NAV_SERVICE.MAP.local_to_map(get_local_mouse_position()))
+				PLAYER_CONTROLLER.pawn_move(NAV_SERVICE.MAP, path, active)
 			# Disable player input and call a pawn move
 			is_move_step = true
 
@@ -58,11 +60,11 @@ func _end_player_move_step():
 	move_action = false
 	TURN_SERVICE.change_turn()
 	display_debug_label(str(TURN_SERVICE.turn))
-	player = TURN_SERVICE.get_current_turn_pawn()
-	CAMERA.focus_next_unit(player)
+	active = TURN_SERVICE.get_current_turn_pawn()
+	CAMERA.focus_next_unit(active)
 
 func display_debug_label(msg: String) -> void:
-	$DebugLabel.text = "Turn " + msg
+	$DebugLabel.text = msg
 
 func _on_move_button_down():
 	var timer = get_tree().create_timer(0.2)

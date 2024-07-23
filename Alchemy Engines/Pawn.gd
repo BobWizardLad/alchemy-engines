@@ -9,6 +9,7 @@ class_name Pawn
 @export var DAMAGE: int # damage dealing potential
 @export var SPECIAL_DAMAGE: int # potions and chassis move potency
 @export var INITIATIVE: float # Unit turn priority
+@export var MOVE: int # Unit max tiles travel per turn
 @export var unit_chassis: Chassis # The chassis the unit is using
 
 var current_health: float
@@ -17,6 +18,7 @@ var current_resistance: float
 var current_damage: int
 var current_special_damage: int
 var current_initiative: float
+var current_move: int
 
 var grid_pos: Vector2i
 
@@ -29,3 +31,4 @@ func _ready():
 	current_damage = DAMAGE
 	current_special_damage = SPECIAL_DAMAGE
 	current_initiative = INITIATIVE
+	current_move = MOVE
