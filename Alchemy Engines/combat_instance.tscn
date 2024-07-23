@@ -1,16 +1,15 @@
-[gd_scene load_steps=31 format=3 uid="uid://qwnn0f7bbkxn"]
+[gd_scene load_steps=30 format=3 uid="uid://qwnn0f7bbkxn"]
 
 [ext_resource type="Texture2D" uid="uid://bpiomleg6q6cq" path="res://assets/IsoTileMap.png" id="1_28q0j"]
-[ext_resource type="Script" path="res://GameService.gd" id="1_he3ci"]
-[ext_resource type="Script" path="res://TurnService.gd" id="2_eknaf"]
-[ext_resource type="Script" path="res://TacticsTileMap.gd" id="3_oa8ik"]
-[ext_resource type="Script" path="res://AstarService.gd" id="4_krdri"]
-[ext_resource type="Script" path="res://PlayerController.gd" id="6_e71m8"]
-[ext_resource type="Script" path="res://NavService.gd" id="6_ywr2q"]
+[ext_resource type="Script" path="res://scripts/GameService.gd" id="1_he3ci"]
+[ext_resource type="Script" path="res://scripts/TurnService.gd" id="2_eknaf"]
+[ext_resource type="Script" path="res://scripts/AstarService.gd" id="4_krdri"]
+[ext_resource type="Script" path="res://scripts/PlayerController.gd" id="6_e71m8"]
+[ext_resource type="Script" path="res://scripts/NavService.gd" id="6_ywr2q"]
 [ext_resource type="PackedScene" uid="uid://wxvjnpow12ky" path="res://Pawn.tscn" id="7_4cdsd"]
-[ext_resource type="Script" path="res://CombatUI.gd" id="7_4s5bv"]
+[ext_resource type="Script" path="res://scripts/CombatUI.gd" id="7_4s5bv"]
 [ext_resource type="Texture2D" uid="uid://c3qixv0nfoqjs" path="res://assets/combat_ui_lower.png" id="7_ro586"]
-[ext_resource type="Script" path="res://CombatCamera.gd" id="7_s1tf4"]
+[ext_resource type="Script" path="res://scripts/CombatCamera.gd" id="7_s1tf4"]
 [ext_resource type="Texture2D" uid="uid://d1cxohf4qaco8" path="res://assets/combat_ui_upper.png" id="8_o73a7"]
 [ext_resource type="Texture2D" uid="uid://cxaqvc8efeugn" path="res://assets/ProtagBiggIdle.png" id="9_6jath"]
 [ext_resource type="Texture2D" uid="uid://bqdvtef40r7ky" path="res://assets/UI.png" id="9_klear"]
@@ -113,9 +112,6 @@ layer_0/y_sort_enabled = true
 layer_0/tile_data = PackedInt32Array(0, 65537, 0, 1, 65537, 0, 2, 65537, 0, 3, 65537, 0, 4, 65537, 0, 65536, 65537, 0, 131072, 65537, 0, 196608, 65537, 1, 262144, 65537, 1, 327680, 65537, 1, 65537, 65537, 0, 131073, 65537, 1, 196609, 65537, 1, 262145, 65537, 1, 327681, 65537, 1, 65538, 65537, 1, 131074, 65537, 1, 196610, 65537, 1, 262146, 65537, 1, 327682, 65537, 1, 65539, 65537, 0, 131075, 65537, 1, 196611, 65537, 1, 262147, 65537, 1, 327683, 131073, 1, 65540, 65537, 0, 131076, 1, 1, 196612, 131073, 1, 262148, 131073, 1, 327684, 131073, 1, 5, 65537, 0, 65541, 1, 1, 131077, 1, 1, 196613, 131073, 1, 262149, 131073, 1, 327685, 131073, 1, 6, 65537, 0, 65542, 1, 1, 131078, 131073, 1, 196614, 131073, 1, 262150, 131073, 1, 327686, 131073, 1, 65535, 65537, 0, 131071, 65537, 0, 196607, 65537, 0, 262143, 65537, 0, 327679, 65537, 1, 393215, 65537, 1, 458751, 65537, 1, 524287, 65537, 0, 589823, 65537, 0, 655359, 65537, 0, 393216, 65537, 1, 458752, 65537, 1, 524288, 65537, 0, 589824, 65537, 0, 393217, 65537, 1, 458753, 131073, 1, 524289, 65537, 0, 589825, 65537, 0, 393218, 131073, 1, 458754, 131073, 1, 524290, 65537, 0, 589826, 65537, 0, 393219, 131073, 1, 458755, 131073, 1, 524291, 65537, 0, 589827, 65537, 0, 393220, 131073, 1, 458756, 131073, 1, 524292, 65537, 0, 589828, 65537, 0, 393221, 131073, 1, 458757, 65537, 0, 524293, 65537, 0, 589829, 65537, 0, 393222, 65537, 0, 458758, 65537, 0, 524294, 65537, 0, 589830, 65537, 0, 7, 65537, 0, 65543, 1, 1, 131079, 1, 1, 196615, 65537, 0, 262151, 65537, 0, 327687, 65537, 0, 393223, 65537, 0, 458759, 65537, 0, 524295, 65537, 0, 589831, 65537, 0, 8, 65537, 0, 65544, 65537, 0, 131080, 65537, 0, 196616, 65537, 0, 262152, 65537, 0, 327688, 65537, 0, 393224, 65537, 0, 458760, 65537, 0, 524296, 65537, 0, 589832, 65537, 0)
 layer_1/y_sort_enabled = true
 layer_1/tile_data = PackedInt32Array()
-script = ExtResource("3_oa8ik")
-
-[node name="LogicalMap" type="Node" parent="NavService"]
 
 [node name="EnemyController" type="Node2D" parent="."]
 
@@ -422,10 +418,10 @@ theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 30
 text = " * Potion"
 
-[node name="DebugLabel" type="Label" parent="."]
-offset_left = -300.0
-offset_top = -190.0
-offset_right = -260.0
-offset_bottom = -167.0
+[node name="DebugLabel" type="Label" parent="CombatCamera"]
+offset_left = -538.0
+offset_top = -304.0
+offset_right = -498.0
+offset_bottom = -281.0
 
 [connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Move" to="." method="_on_move_button_down"]

@@ -2,7 +2,7 @@ extends Control
 
 @onready var ACTIONS_MENU: Control = $ActionsMenu
 
-@onready var unit_name: Label = $Stats/TextureRect/UnitName
+@onready var unit_name: Label = $Stats/NameTexture/UnitName
 
 # Set up the UI
 func _ready():

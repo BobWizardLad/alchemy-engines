@@ -6,10 +6,6 @@ signal move_step_finished
 func _ready():
 	connect("move_step_finished", get_parent()._end_player_move_step)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 func snap_units(map: TileMap):
 	for each in get_children():
 		each.position = map.map_to_local(map.local_to_map(each.position))

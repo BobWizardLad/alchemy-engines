@@ -64,7 +64,7 @@ func _end_player_move_step():
 	CAMERA.focus_next_unit(active)
 
 func display_debug_label(msg: String) -> void:
-	$DebugLabel.text = msg
+	$CombatCamera/DebugLabel.text = msg
 
 func _on_move_button_down():
 	var timer = get_tree().create_timer(0.2)

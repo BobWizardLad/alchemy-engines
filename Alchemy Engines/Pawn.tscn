@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://wxvjnpow12ky"]
 
 [ext_resource type="Texture2D" uid="uid://c86pymncn7od5" path="res://assets/ProtagFastIdle.png" id="1_2p0gm"]
-[ext_resource type="Script" path="res://Pawn.gd" id="2_kywyg"]
+[ext_resource type="Script" path="res://scripts/Pawn.gd" id="2_kywyg"]
 
 [node name="Player" type="Sprite2D"]
 z_index = 1
