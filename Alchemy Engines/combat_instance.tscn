@@ -81,7 +81,7 @@ region = Rect2(8, 8, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o14hp"]
 atlas = ExtResource("9_klear")
-region = Rect2(64, 0, 48, 16)
+region = Rect2(64, 16, 48, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rsfuw"]
 atlas = ExtResource("9_klear")
@@ -89,7 +89,7 @@ region = Rect2(64, 32, 48, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wri1e"]
 atlas = ExtResource("9_klear")
-region = Rect2(64, 16, 48, 16)
+region = Rect2(64, 0, 48, 16)
 
 [node name="GameService" type="Node2D"]
 y_sort_enabled = true
@@ -166,23 +166,30 @@ layout_mode = 2
 
 [node name="StatsTexture" type="NinePatchRect" parent="CombatCamera/UI/Stats"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
+anchor_left = 0.004
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 0.04
+offset_right = -1.0
+offset_bottom = -62.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_ebj7c")
+region_rect = Rect2(0, 0, 32, 32)
 patch_margin_left = 10
 patch_margin_top = 10
 patch_margin_right = 10
 patch_margin_bottom = 10
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
 [node name="NameTexture" type="NinePatchRect" parent="CombatCamera/UI/Stats"]
 layout_mode = 0
-offset_left = 9.0
-offset_top = -19.0
-offset_right = 106.0
-offset_bottom = 13.0
+offset_left = 14.0
+offset_top = -8.0
+offset_right = 110.0
+offset_bottom = 8.0
 texture = SubResource("AtlasTexture_alvi5")
 patch_margin_left = 20
 patch_margin_right = 20
@@ -191,9 +198,9 @@ axis_stretch_horizontal = 2
 [node name="UnitName" type="Label" parent="CombatCamera/UI/Stats/NameTexture"]
 layout_mode = 0
 offset_left = 6.0
-offset_top = 4.0
-offset_right = 91.0
-offset_bottom = 26.0
+offset_top = -5.0
+offset_right = 90.0
+offset_bottom = 17.0
 theme_override_font_sizes/font_size = 15
 text = "Mr. S.A.M"
 horizontal_alignment = 1
@@ -208,7 +215,6 @@ offset_right = 92.0
 offset_bottom = 32.0
 scale = Vector2(2.4, 2.4)
 texture = SubResource("AtlasTexture_u2wcq")
-stretch_mode = 4
 
 [node name="HealthBar" type="TextureProgressBar" parent="CombatCamera/UI/Stats"]
 layout_mode = 0
@@ -266,10 +272,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -48.5
-offset_top = -17.0
-offset_right = 48.5
-offset_bottom = 15.0
+offset_left = -48.0
+offset_top = -8.0
+offset_right = 49.0
+offset_bottom = 8.0
 grow_horizontal = 2
 texture = SubResource("AtlasTexture_alvi5")
 patch_margin_left = 20
@@ -277,11 +283,16 @@ patch_margin_right = 20
 axis_stretch_horizontal = 2
 
 [node name="Label" type="Label" parent="CombatCamera/UI/ActionsMenu/ActionsLabel"]
-layout_mode = 0
-offset_left = 6.0
-offset_top = 4.0
-offset_right = 91.0
-offset_bottom = 26.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.062
+anchor_top = 0.13
+anchor_right = 0.062
+anchor_bottom = 0.13
+offset_left = -0.0140004
+offset_top = -7.08
+offset_right = 84.986
+offset_bottom = 14.92
 theme_override_font_sizes/font_size = 15
 text = "Your Turn!"
 horizontal_alignment = 1
