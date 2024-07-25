@@ -6,21 +6,30 @@ class_name PawnService
 @onready var ENEMY_CONTROLLER: Node2D = $EnemyController
 
 signal move_step_finished
+signal attack_step_finished
 
 func _ready():
 	connect("move_step_finished", get_parent()._end_player_move_step)
+	connect("attack_step_finished", get_parent()._end_player_attack_step)
 
-# - TEST -
 func get_all_units() -> Array[Node]:
 	var all_units = PLAYER_CONTROLLER.get_children() + ENEMY_CONTROLLER.get_children()
 	return all_units
 
-# - TEST -
 func snap_units(map: TileMap):
 	for each in get_all_units():
 		each.position = map.map_to_local(map.local_to_map(each.position))
 
-# - TEST -
+func pawn_attack(attacker: Pawn, target: Pawn):
+	if target.current_armor > 0:
+		target.current_armor -= attacker.current_damage * (1.0 - target.current_resistance)
+		if target.current_armor < 0:
+			target.current_health += target.current_armor
+			target.current_armor = 0
+	elif target.current_armor <= 0:
+		target.current_health -= attacker.current_damage * (1.0 - target.current_resistance)
+	emit_signal("attack_step_finished")
+
 # path is a list of points handed to the move command.
 # map is the tilemap being naviated
 func pawn_move(map: TileMap, path: PackedVector2Array, pawn: Pawn):

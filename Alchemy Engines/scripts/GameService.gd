@@ -20,17 +20,20 @@ var active: Pawn
 # Player cannot input during 'move step'
 var is_move_step: bool
 var move_action: bool
+var is_attack_step: bool
 var attack_action: bool
+
 
 func _ready():
 	is_move_step = false
 	move_action = false
 	attack_action = false
+	is_attack_step = false
 	
-	TURN_SERVICE.populate_initiative(PAWN_SERVICE.get_all_units()) # TODO - Update to pawn service
-	PAWN_SERVICE.snap_units(NAV_SERVICE.MAP) # TODO - Update to pawn service
+	TURN_SERVICE.populate_initiative(PAWN_SERVICE.get_all_units())
+	PAWN_SERVICE.snap_units(NAV_SERVICE.MAP)
 	NAV_SERVICE.build_astar_map(0)
-	for each in PAWN_SERVICE.get_all_units(): # TODO - Update to pawn service
+	for each in PAWN_SERVICE.get_all_units():
 		NAV_SERVICE.set_point_disabled(each.position, true)
 	
 	_on_new_turn()
@@ -38,9 +41,9 @@ func _ready():
 func _process(_delta) -> void:
 	display_debug_label(str(NAV_SERVICE.MAP.local_to_map(get_global_mouse_position())))
 	
-	if move_action:
+	if move_action || attack_action:
 		UI.hide_actions_menu()
-	if not move_action:
+	elif not move_action || not attack_action:
 		UI.focus_actions_menu()
 
 func _input(event):
@@ -56,15 +59,33 @@ func _input(event):
 				# Set the pawn's pre-move position to enabled point
 				NAV_SERVICE.set_point_disabled(active.position, false)
 				var path = NAV_SERVICE.ASTAR.get_astar_path(NAV_SERVICE.MAP.local_to_map(active.position), NAV_SERVICE.MAP.local_to_map(get_local_mouse_position()))
+				# Disable player input and call a pawn move
+				is_move_step = true
 				PAWN_SERVICE.pawn_move(NAV_SERVICE.MAP, path, active) # TODO - Update to pawn service
-			# Disable player input and call a pawn move
-			is_move_step = true
+	if attack_action:
+		if event is InputEventMouseMotion and not is_attack_step:
+			# Highlight unit under the cursor
+			for each in PAWN_SERVICE.get_all_units():
+				if each.position == NAV_SERVICE.MAP.map_to_local(NAV_SERVICE.MAP.local_to_map(get_local_mouse_position())):
+					each.modulate = Color(1, 0.5, 0.5)
+					break
+		if event is InputEventMouseButton and not is_attack_step:
+			for each in PAWN_SERVICE.get_all_units():
+				if each.position == NAV_SERVICE.MAP.map_to_local(NAV_SERVICE.MAP.local_to_map(get_local_mouse_position())):
+					is_attack_step = true
+					PAWN_SERVICE.pawn_attack(active, each)
+					break
 
 func _end_player_move_step():
 	is_move_step = false
 	move_action = false
 	# Set the pawn's new position to disable
 	NAV_SERVICE.set_point_disabled(active.position, true)
+	TURN_SERVICE.change_turn()
+
+func _end_player_attack_step():
+	is_attack_step = false
+	attack_action = false
 	TURN_SERVICE.change_turn()
 
 func _on_new_turn():
@@ -79,4 +100,7 @@ func _on_move_button_down():
 	await timer.timeout
 	move_action = true
 
-
+func _on_action_button_down():
+	var timer = get_tree().create_timer(0.2)
+	await timer.timeout
+	attack_action = true
