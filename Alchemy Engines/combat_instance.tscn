@@ -122,18 +122,23 @@ script = ExtResource("14_s53s0")
 
 [node name="Player" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
 position = Vector2(581, 88)
+pawn_name = "Enemy1"
 
 [node name="Player2" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
 position = Vector2(527, -26)
+pawn_name = "Enemy2"
 
 [node name="Player3" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
 position = Vector2(606, 12)
+pawn_name = "Enemy3"
 
 [node name="Player4" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
 position = Vector2(506, 26)
+pawn_name = "Enemy4"
 
 [node name="Player5" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
 position = Vector2(525, 74)
+pawn_name = "Enemy5"
 
 [node name="PlayerController" type="Node2D" parent="PawnService"]
 y_sort_enabled = true
@@ -142,16 +147,20 @@ script = ExtResource("6_e71m8")
 [node name="Player" parent="PawnService/PlayerController" instance=ExtResource("7_4cdsd")]
 position = Vector2(158, -37)
 scale = Vector2(1.10938, 1)
+pawn_name = "Willy"
 
 [node name="Player2" parent="PawnService/PlayerController" instance=ExtResource("7_4cdsd")]
 position = Vector2(118, -15)
+pawn_name = "Jonas"
 
 [node name="Player3" parent="PawnService/PlayerController" instance=ExtResource("7_4cdsd")]
 position = Vector2(35, 24)
+pawn_name = "Roxanne"
 
 [node name="Player4" parent="PawnService/PlayerController" instance=ExtResource("7_4cdsd")]
 position = Vector2(78, 4)
 texture = ExtResource("9_6jath")
+pawn_name = "Layla"
 
 [node name="CombatCamera" type="Camera2D" parent="."]
 position = Vector2(238, 114)

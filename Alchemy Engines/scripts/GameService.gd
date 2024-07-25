@@ -61,19 +61,21 @@ func _input(event):
 				var path = NAV_SERVICE.ASTAR.get_astar_path(NAV_SERVICE.MAP.local_to_map(active.position), NAV_SERVICE.MAP.local_to_map(get_local_mouse_position()))
 				# Disable player input and call a pawn move
 				is_move_step = true
-				PAWN_SERVICE.pawn_move(NAV_SERVICE.MAP, path, active) # TODO - Update to pawn service
+				PAWN_SERVICE.pawn_move(NAV_SERVICE.MAP, path, active)
 	if attack_action:
 		if event is InputEventMouseMotion and not is_attack_step:
 			# Highlight unit under the cursor
 			for each in PAWN_SERVICE.get_all_units():
 				if each.position == NAV_SERVICE.MAP.map_to_local(NAV_SERVICE.MAP.local_to_map(get_local_mouse_position())):
-					each.modulate = Color(1, 0.5, 0.5)
-					break
+					each.modulate = Color.PALE_VIOLET_RED
+				else:
+					each.modulate = Color.WHITE
 		if event is InputEventMouseButton and not is_attack_step:
 			for each in PAWN_SERVICE.get_all_units():
 				if each.position == NAV_SERVICE.MAP.map_to_local(NAV_SERVICE.MAP.local_to_map(get_local_mouse_position())):
 					is_attack_step = true
 					PAWN_SERVICE.pawn_attack(active, each)
+					each.modulate = Color.WHITE
 					break
 
 func _end_player_move_step():
@@ -90,6 +92,7 @@ func _end_player_attack_step():
 
 func _on_new_turn():
 	active = TURN_SERVICE.get_current_turn_pawn()
+	UI.update_current_unit(active)
 	CAMERA.focus_next_unit(active)
 
 func display_debug_label(msg: String) -> void:

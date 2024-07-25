@@ -10,7 +10,8 @@ class_name Pawn
 @export var SPECIAL_DAMAGE: int # potions and chassis move potency
 @export var INITIATIVE: float # Unit turn priority
 @export var MOVE: int # Unit max tiles travel per turn
-@export var unit_chassis: Chassis # The chassis the unit is using
+@export var unit_type: Class # The chassis the unit is using
+@export var pawn_name: String
 
 var current_health: float
 var current_armor: float
@@ -22,7 +23,7 @@ var current_move: int
 
 var grid_pos: Vector2i
 
-enum Chassis{Bigg, Fast, Help}
+enum Class{Bigg, Fast, Help, Fat, Run, Shot}
 
 func _ready():
 	current_health = HEALTH_MAX
