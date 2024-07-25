@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://qwnn0f7bbkxn"]
+[gd_scene load_steps=31 format=3 uid="uid://qwnn0f7bbkxn"]
 
 [ext_resource type="Texture2D" uid="uid://bpiomleg6q6cq" path="res://assets/IsoTileMap.png" id="1_28q0j"]
 [ext_resource type="Script" path="res://scripts/GameService.gd" id="1_he3ci"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://d1cxohf4qaco8" path="res://assets/combat_ui_upper.png" id="8_o73a7"]
 [ext_resource type="Texture2D" uid="uid://cxaqvc8efeugn" path="res://assets/ProtagBiggIdle.png" id="9_6jath"]
 [ext_resource type="Texture2D" uid="uid://bqdvtef40r7ky" path="res://assets/UI.png" id="9_klear"]
+[ext_resource type="Script" path="res://scripts/PawnService.gd" id="14_s53s0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2mr7d"]
 texture = ExtResource("1_28q0j")
@@ -113,38 +114,42 @@ layer_0/tile_data = PackedInt32Array(0, 65537, 0, 1, 65537, 0, 2, 65537, 0, 3, 6
 layer_1/y_sort_enabled = true
 layer_1/tile_data = PackedInt32Array()
 
-[node name="EnemyController" type="Node2D" parent="."]
+[node name="PawnService" type="Node2D" parent="."]
+y_sort_enabled = true
+script = ExtResource("14_s53s0")
 
-[node name="Player" parent="EnemyController" instance=ExtResource("7_4cdsd")]
-position = Vector2(559, 81)
+[node name="EnemyController" type="Node2D" parent="PawnService"]
 
-[node name="Player2" parent="EnemyController" instance=ExtResource("7_4cdsd")]
-position = Vector2(516, -19)
+[node name="Player" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
+position = Vector2(581, 88)
 
-[node name="Player3" parent="EnemyController" instance=ExtResource("7_4cdsd")]
-position = Vector2(598, 20)
+[node name="Player2" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
+position = Vector2(527, -26)
 
-[node name="Player4" parent="EnemyController" instance=ExtResource("7_4cdsd")]
-position = Vector2(518, 19)
+[node name="Player3" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
+position = Vector2(606, 12)
 
-[node name="Player5" parent="EnemyController" instance=ExtResource("7_4cdsd")]
-position = Vector2(518, 61)
+[node name="Player4" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
+position = Vector2(506, 26)
 
-[node name="PlayerController" type="Node2D" parent="."]
+[node name="Player5" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
+position = Vector2(525, 74)
+
+[node name="PlayerController" type="Node2D" parent="PawnService"]
 y_sort_enabled = true
 script = ExtResource("6_e71m8")
 
-[node name="Player" parent="PlayerController" instance=ExtResource("7_4cdsd")]
+[node name="Player" parent="PawnService/PlayerController" instance=ExtResource("7_4cdsd")]
 position = Vector2(158, -37)
 scale = Vector2(1.10938, 1)
 
-[node name="Player2" parent="PlayerController" instance=ExtResource("7_4cdsd")]
+[node name="Player2" parent="PawnService/PlayerController" instance=ExtResource("7_4cdsd")]
 position = Vector2(118, -15)
 
-[node name="Player3" parent="PlayerController" instance=ExtResource("7_4cdsd")]
+[node name="Player3" parent="PawnService/PlayerController" instance=ExtResource("7_4cdsd")]
 position = Vector2(35, 24)
 
-[node name="Player4" parent="PlayerController" instance=ExtResource("7_4cdsd")]
+[node name="Player4" parent="PawnService/PlayerController" instance=ExtResource("7_4cdsd")]
 position = Vector2(78, 4)
 texture = ExtResource("9_6jath")
 

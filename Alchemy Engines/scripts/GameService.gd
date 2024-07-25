@@ -11,6 +11,8 @@ extends Node2D
 # Reference to player controller
 @onready var PLAYER_CONTROLLER: PlayerController = $PlayerController
 @onready var ENEMY_CONTROLLER: Node2D = $EnemyController
+# Reference pawn service that manages unit interactions
+@onready var PAWN_SERVICE: PawnService = $PawnService
 
 var active: Pawn
 
@@ -25,12 +27,10 @@ func _ready():
 	move_action = false
 	attack_action = false
 	
-	TURN_SERVICE.populate_initiative(PLAYER_CONTROLLER.get_children())
-	PLAYER_CONTROLLER.snap_units(NAV_SERVICE.MAP)
+	TURN_SERVICE.populate_initiative(PAWN_SERVICE.get_all_units()) # TODO - Update to pawn service
+	PAWN_SERVICE.snap_units(NAV_SERVICE.MAP) # TODO - Update to pawn service
 	NAV_SERVICE.build_astar_map(0)
-	for each in PLAYER_CONTROLLER.get_children():
-		NAV_SERVICE.set_point_disabled(each.position, true)
-	for each in ENEMY_CONTROLLER.get_children():
+	for each in PAWN_SERVICE.get_all_units(): # TODO - Update to pawn service
 		NAV_SERVICE.set_point_disabled(each.position, true)
 	
 	_on_new_turn()
@@ -56,7 +56,7 @@ func _input(event):
 				# Set the pawn's pre-move position to enabled point
 				NAV_SERVICE.set_point_disabled(active.position, false)
 				var path = NAV_SERVICE.ASTAR.get_astar_path(NAV_SERVICE.MAP.local_to_map(active.position), NAV_SERVICE.MAP.local_to_map(get_local_mouse_position()))
-				PLAYER_CONTROLLER.pawn_move(NAV_SERVICE.MAP, path, active)
+				PAWN_SERVICE.pawn_move(NAV_SERVICE.MAP, path, active) # TODO - Update to pawn service
 			# Disable player input and call a pawn move
 			is_move_step = true
 
