@@ -9,7 +9,7 @@ class_name NavService
 var map_tiles_active: PackedVector2Array
 
 # Set the selection layer(1) tile at given position to 
-# the selection overlay tile
+# the selection overlay tile 
 func focus_tile(local_pos: Vector2) -> void:
 	MAP.set_cell(1, MAP.local_to_map(local_pos), 1, Vector2.ZERO)
 
