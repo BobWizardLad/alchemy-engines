@@ -64,19 +64,24 @@ func _input(event):
 				PAWN_SERVICE.pawn_move(NAV_SERVICE.MAP, path, active)
 	if attack_action:
 		if event is InputEventMouseMotion and not is_attack_step:
+			NAV_SERVICE.clear_selection_layer()
 			# Highlight unit under the cursor
-			for each in PAWN_SERVICE.get_all_units():
-				if each.position == NAV_SERVICE.MAP.map_to_local(NAV_SERVICE.MAP.local_to_map(get_local_mouse_position())):
-					each.modulate = Color.PALE_VIOLET_RED
-				else:
-					each.modulate = Color.WHITE
+			if get_cursor_hovering_unit(PAWN_SERVICE, NAV_SERVICE.MAP) != null:
+				NAV_SERVICE.focus_tile(get_local_mouse_position())
+				
 		if event is InputEventMouseButton and not is_attack_step:
-			for each in PAWN_SERVICE.get_all_units():
-				if each.position == NAV_SERVICE.MAP.map_to_local(NAV_SERVICE.MAP.local_to_map(get_local_mouse_position())):
-					is_attack_step = true
-					PAWN_SERVICE.pawn_attack(active, each)
-					each.modulate = Color.WHITE
-					break
+			if get_cursor_hovering_unit(PAWN_SERVICE, NAV_SERVICE.MAP) != null:
+				NAV_SERVICE.clear_selection_layer()
+				is_attack_step = true
+				PAWN_SERVICE.pawn_attack(active, get_cursor_hovering_unit(PAWN_SERVICE, NAV_SERVICE.MAP))
+
+# Checks the position of all units to see if they are under the cursor.
+# Returns the pawn under the cursor if ther is one, returns null if one is not there
+func get_cursor_hovering_unit(pawn_service: PawnService, map: TileMap) -> Pawn:
+	for each in PAWN_SERVICE.get_all_units():
+		if each.position == map.map_to_local(map.local_to_map(get_local_mouse_position())):
+			return each
+	return null
 
 func _end_player_move_step():
 	is_move_step = false

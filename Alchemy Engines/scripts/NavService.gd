@@ -8,6 +8,15 @@ class_name NavService
 # hover.
 var map_tiles_active: PackedVector2Array
 
+# Set the selection layer(1) tile at given position to 
+# the selection overlay tile
+func focus_tile(local_pos: Vector2) -> void:
+	MAP.set_cell(1, MAP.local_to_map(local_pos), 1, Vector2.ZERO)
+
+# Clear the selection layer of any highlighted tiles
+func clear_selection_layer() -> void:
+	MAP.clear_layer(1)
+
 # Handle path example
 func update_planned_path(active_pawn: Pawn) -> void:
 	MAP.clear_layer(1)
