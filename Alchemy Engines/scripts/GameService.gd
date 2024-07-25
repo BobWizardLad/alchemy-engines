@@ -1,6 +1,5 @@
 extends Node2D
 
-
 # Camera for scene
 @onready var CAMERA: Camera2D = $CombatCamera
 # Combat UI handler
@@ -11,6 +10,7 @@ extends Node2D
 @onready var TURN_SERVICE: TurnService = $TurnService
 # Reference to player controller
 @onready var PLAYER_CONTROLLER: PlayerController = $PlayerController
+@onready var ENEMY_CONTROLLER: Node2D = $EnemyController
 
 var active: Pawn
 
@@ -27,10 +27,13 @@ func _ready():
 	
 	TURN_SERVICE.populate_initiative(PLAYER_CONTROLLER.get_children())
 	PLAYER_CONTROLLER.snap_units(NAV_SERVICE.MAP)
-	active = TURN_SERVICE.get_current_turn_pawn()
 	NAV_SERVICE.build_astar_map(0)
+	for each in PLAYER_CONTROLLER.get_children():
+		NAV_SERVICE.set_point_disabled(each.position, true)
+	for each in ENEMY_CONTROLLER.get_children():
+		NAV_SERVICE.set_point_disabled(each.position, true)
 	
-	CAMERA.focus_next_unit(active)
+	_on_new_turn()
 
 func _process(_delta) -> void:
 	display_debug_label(str(NAV_SERVICE.MAP.local_to_map(get_global_mouse_position())))
@@ -50,6 +53,8 @@ func _input(event):
 			NAV_SERVICE.MAP.clear_layer(1)
 		if event is InputEventMouseButton and NAV_SERVICE.MAP.get_used_cells(0).find(NAV_SERVICE.MAP.local_to_map(get_local_mouse_position())) != -1:
 			if not is_move_step:
+				# Set the pawn's pre-move position to enabled point
+				NAV_SERVICE.set_point_disabled(active.position, false)
 				var path = NAV_SERVICE.ASTAR.get_astar_path(NAV_SERVICE.MAP.local_to_map(active.position), NAV_SERVICE.MAP.local_to_map(get_local_mouse_position()))
 				PLAYER_CONTROLLER.pawn_move(NAV_SERVICE.MAP, path, active)
 			# Disable player input and call a pawn move
@@ -58,8 +63,11 @@ func _input(event):
 func _end_player_move_step():
 	is_move_step = false
 	move_action = false
+	# Set the pawn's new position to disable
+	NAV_SERVICE.set_point_disabled(active.position, true)
 	TURN_SERVICE.change_turn()
-	display_debug_label(str(TURN_SERVICE.turn))
+
+func _on_new_turn():
 	active = TURN_SERVICE.get_current_turn_pawn()
 	CAMERA.focus_next_unit(active)
 
@@ -70,3 +78,5 @@ func _on_move_button_down():
 	var timer = get_tree().create_timer(0.2)
 	await timer.timeout
 	move_action = true
+
+

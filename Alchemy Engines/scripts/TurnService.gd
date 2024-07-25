@@ -6,6 +6,8 @@ class_name TurnService
 
 var turn_order: Array[Node] = []
 
+signal new_turn
+
 # Call to determine turn order within the units provided by parameter
 # WARNING this will wipe the previous turn order.
 func populate_initiative(units: Array[Node]) -> Array[Node]:
@@ -37,5 +39,5 @@ func change_turn() -> Node2D:
 		turn = 0
 	else:
 		turn = 0
-	
+	emit_signal("new_turn")
 	return self
