@@ -20,10 +20,20 @@ func clear_selection_layer() -> void:
 # Handle path example
 func update_planned_path(active_pawn: Pawn) -> void:
 	MAP.clear_layer(1)
-	map_tiles_active = ASTAR.get_astar_path(MAP.local_to_map(active_pawn.position), MAP.local_to_map(get_local_mouse_position()))
-	show_planned_path(1, 1, Vector2(0, 0), map_tiles_active.slice(0, active_pawn.current_move-1))
+	var map_tiles_active: Array[Vector2i] = []
+	var new_tiles: Array[Vector2i] = []
+	map_tiles_active.append(MAP.local_to_map(active_pawn.position))
+	for each in range(0, active_pawn.current_atk_range):
+		for tile in map_tiles_active:
+			for item in MAP.get_surrounding_cells(tile):
+				if new_tiles.find(item) == -1 && MAP.get_cell_tile_data(0, item) != null && MAP.get_cell_tile_data(0, item).get_custom_data("walkable"):
+					new_tiles.append(item)
+		for tile in new_tiles:
+			map_tiles_active.append(tile)
+	
+	show_planned_path(1, 1, Vector2(0, 0), map_tiles_active)
 
-func show_planned_path(vis_layer_id: int, img_src_id: int, atlas_pos: Vector2, path: PackedVector2Array):
+func show_planned_path(vis_layer_id: int, img_src_id: int, atlas_pos: Vector2, path: Array[Vector2i]):
 	for each in path:
 		MAP.set_cell(vis_layer_id, each, img_src_id, atlas_pos)
 

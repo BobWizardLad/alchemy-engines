@@ -8,9 +8,6 @@ extends Node2D
 @onready var NAV_SERVICE: NavService = $NavService
 # Turn order is orchestrated by TurnService node
 @onready var TURN_SERVICE: TurnService = $TurnService
-# Reference to player controller
-@onready var PLAYER_CONTROLLER: PlayerController = $PlayerController
-@onready var ENEMY_CONTROLLER: Node2D = $EnemyController
 # Reference pawn service that manages unit interactions
 @onready var PAWN_SERVICE: PawnService = $PawnService
 

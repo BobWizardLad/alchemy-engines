@@ -10,6 +10,7 @@ class_name Pawn
 @export var SPECIAL_DAMAGE: int # potions and chassis move potency
 @export var INITIATIVE: float # Unit turn priority
 @export var MOVE: int # Unit max tiles travel per turn
+@export var ATK_RANGE: int
 @export var unit_type: Class # The chassis the unit is using
 @export var pawn_name: String
 
@@ -20,6 +21,7 @@ var current_damage: int
 var current_special_damage: int
 var current_initiative: float
 var current_move: int
+var current_atk_range: int
 
 var grid_pos: Vector2i
 
@@ -33,3 +35,4 @@ func _ready():
 	current_special_damage = SPECIAL_DAMAGE
 	current_initiative = INITIATIVE
 	current_move = MOVE
+	current_atk_range = ATK_RANGE
