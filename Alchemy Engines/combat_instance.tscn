@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://qwnn0f7bbkxn"]
+[gd_scene load_steps=32 format=3 uid="uid://qwnn0f7bbkxn"]
 
 [ext_resource type="Texture2D" uid="uid://bpiomleg6q6cq" path="res://assets/IsoTileMap.png" id="1_28q0j"]
 [ext_resource type="Script" path="res://scripts/GameService.gd" id="1_he3ci"]
@@ -13,35 +13,18 @@
 [ext_resource type="Texture2D" uid="uid://d1cxohf4qaco8" path="res://assets/combat_ui_upper.png" id="8_o73a7"]
 [ext_resource type="Texture2D" uid="uid://cxaqvc8efeugn" path="res://assets/ProtagBiggIdle.png" id="9_6jath"]
 [ext_resource type="Texture2D" uid="uid://bqdvtef40r7ky" path="res://assets/UI.png" id="9_klear"]
+[ext_resource type="Texture2D" uid="uid://c8em6lxls3rs8" path="res://assets/ProtagHelpIdle.png" id="13_d3se6"]
 [ext_resource type="Script" path="res://scripts/PawnService.gd" id="14_s53s0"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2mr7d"]
-texture = ExtResource("1_28q0j")
-texture_region_size = Vector2i(80, 80)
-0:0/0 = 0
-1:0/0 = 0
-1:0/0/custom_data_0 = true
-2:0/0 = 0
-2:1/0 = 0
-1:1/0 = 0
-1:1/0/custom_data_0 = true
-0:1/0 = 0
-0:1/0/custom_data_0 = true
-2:2/0 = 0
-1:2/0 = 0
-0:2/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_eo1nr"]
-tile_shape = 1
-tile_layout = 4
-tile_size = Vector2i(80, 40)
-custom_data_layer_0/name = "walkable"
-custom_data_layer_0/type = 1
-sources/1 = SubResource("TileSetAtlasSource_2mr7d")
+[ext_resource type="Texture2D" uid="uid://c7vyvf4jggq2q" path="res://assets/gradient.png" id="14_vntch"]
+[ext_resource type="PackedScene" uid="uid://btygx12jdvyhy" path="res://ui_button.tscn" id="15_ltxxa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ebj7c"]
 atlas = ExtResource("9_klear")
 region = Rect2(8, 8, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ihyo8"]
+atlas = ExtResource("13_d3se6")
+region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_alvi5"]
 atlas = ExtResource("9_klear")
@@ -83,17 +66,29 @@ region = Rect2(112, 32, 48, 16)
 atlas = ExtResource("9_klear")
 region = Rect2(8, 8, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_o14hp"]
-atlas = ExtResource("9_klear")
-region = Rect2(64, 16, 48, 16)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2mr7d"]
+texture = ExtResource("1_28q0j")
+texture_region_size = Vector2i(80, 80)
+0:0/0 = 0
+1:0/0 = 0
+1:0/0/custom_data_0 = true
+2:0/0 = 0
+2:1/0 = 0
+1:1/0 = 0
+1:1/0/custom_data_0 = true
+0:1/0 = 0
+0:1/0/custom_data_0 = true
+2:2/0 = 0
+1:2/0 = 0
+0:2/0 = 0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rsfuw"]
-atlas = ExtResource("9_klear")
-region = Rect2(64, 32, 48, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wri1e"]
-atlas = ExtResource("9_klear")
-region = Rect2(64, 0, 48, 16)
+[sub_resource type="TileSet" id="TileSet_eo1nr"]
+tile_shape = 1
+tile_layout = 4
+tile_size = Vector2i(80, 40)
+custom_data_layer_0/name = "walkable"
+custom_data_layer_0/type = 1
+sources/1 = SubResource("TileSetAtlasSource_2mr7d")
 
 [node name="GameService" type="Node2D"]
 y_sort_enabled = true
@@ -101,6 +96,286 @@ script = ExtResource("1_he3ci")
 
 [node name="TurnService" type="Node2D" parent="."]
 script = ExtResource("2_eknaf")
+
+[node name="CombatCamera" type="Camera2D" parent="."]
+z_index = 10
+position = Vector2(238, 114)
+script = ExtResource("7_s1tf4")
+
+[node name="UI" type="HBoxContainer" parent="CombatCamera"]
+clip_contents = true
+offset_left = -576.0
+offset_top = -276.0
+offset_right = -302.0
+offset_bottom = -76.0
+scale = Vector2(3, 3)
+script = ExtResource("7_4s5bv")
+
+[node name="Stats" type="Control" parent="CombatCamera/UI"]
+clip_contents = true
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="StatsTexture" type="NinePatchRect" parent="CombatCamera/UI/Stats"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.675
+anchor_right = 0.998
+anchor_bottom = 1.0
+offset_right = -7.60001
+scale = Vector2(1.04, 1)
+texture = SubResource("AtlasTexture_ebj7c")
+region_rect = Rect2(0, 0, 32, 32)
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="IconPortrait" type="TextureRect" parent="CombatCamera/UI/Stats"]
+layout_mode = 2
+anchor_left = -0.147556
+anchor_top = 0.68
+anchor_right = 0.523111
+anchor_bottom = 1.0
+offset_left = 0.0400009
+offset_right = -16.44
+texture = SubResource("AtlasTexture_ihyo8")
+stretch_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="GradientTexture" type="TextureRect" parent="CombatCamera/UI/Stats/IconPortrait"]
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 128.0
+texture = ExtResource("14_vntch")
+
+[node name="NameTexture" type="NinePatchRect" parent="CombatCamera/UI/Stats"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.042
+anchor_top = 0.635
+anchor_right = 0.45
+anchor_bottom = 0.715
+offset_left = -0.0400004
+offset_right = 23.0
+texture = SubResource("AtlasTexture_alvi5")
+patch_margin_left = 20
+patch_margin_right = 20
+axis_stretch_horizontal = 2
+
+[node name="UnitName" type="Label" parent="CombatCamera/UI/Stats/NameTexture"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.083
+anchor_right = 0.917
+anchor_bottom = 1.0
+offset_left = 0.0239997
+offset_right = -0.0240021
+theme_override_font_sizes/font_size = 11
+text = "Mr. S.A.M"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="HealthIcon" type="TextureRect" parent="CombatCamera/UI/Stats"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.375
+anchor_top = 0.715
+anchor_right = 0.508
+anchor_bottom = 0.795
+offset_right = 0.0400085
+texture = SubResource("AtlasTexture_u2wcq")
+stretch_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="HealthBar" type="TextureProgressBar" parent="CombatCamera/UI/Stats"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.525
+anchor_top = 0.715
+anchor_right = 0.924333
+anchor_bottom = 0.795
+offset_left = -1.14441e-05
+offset_right = 0.0799942
+value = 67.0
+texture_under = SubResource("AtlasTexture_d0848")
+texture_over = SubResource("AtlasTexture_dlu5a")
+texture_progress = SubResource("AtlasTexture_8i0jf")
+metadata/_edit_use_anchors_ = true
+
+[node name="ArmorIcon" type="TextureRect" parent="CombatCamera/UI/Stats"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.375
+anchor_top = 0.8
+anchor_right = 0.508
+anchor_bottom = 0.88
+offset_right = 0.0400009
+offset_bottom = -1.52588e-05
+texture = SubResource("AtlasTexture_17qi8")
+stretch_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ArmorBar" type="TextureProgressBar" parent="CombatCamera/UI/Stats"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.525
+anchor_top = 0.8
+anchor_right = 0.924333
+anchor_bottom = 0.88
+offset_right = 0.0799942
+offset_bottom = -1.52588e-05
+value = 88.0
+texture_under = SubResource("AtlasTexture_v33ib")
+texture_over = SubResource("AtlasTexture_f8mvj")
+texture_progress = SubResource("AtlasTexture_uptsw")
+metadata/_edit_use_anchors_ = true
+
+[node name="ActionsMenu" type="Control" parent="CombatCamera/UI"]
+custom_minimum_size = Vector2(120, 200)
+layout_mode = 2
+
+[node name="ActionsTexture" type="NinePatchRect" parent="CombatCamera/UI/ActionsMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.0166667
+anchor_top = 0.61
+anchor_right = 0.999583
+anchor_bottom = 1.005
+offset_left = 2.0
+offset_right = 0.0499878
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_e63rf")
+region_rect = Rect2(0, 0, 32, 32)
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+metadata/_edit_use_anchors_ = true
+
+[node name="ActionsLabel" type="NinePatchRect" parent="CombatCamera/UI/ActionsMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.57
+anchor_right = 0.758
+anchor_bottom = 0.65
+offset_right = 0.0400009
+texture = SubResource("AtlasTexture_alvi5")
+region_rect = Rect2(0, 0, 48, 16)
+patch_margin_left = 20
+patch_margin_right = 20
+axis_stretch_horizontal = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CombatCamera/UI/ActionsMenu/ActionsLabel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.062
+anchor_top = 0.13
+anchor_right = 0.062
+anchor_bottom = 0.13
+offset_left = -0.153999
+offset_top = -2.08
+offset_right = 69.846
+offset_bottom = 13.92
+theme_override_font_sizes/font_size = 11
+text = "Your Turn!"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Options" type="VBoxContainer" parent="CombatCamera/UI/ActionsMenu"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -65.0
+offset_right = 40.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Move" parent="CombatCamera/UI/ActionsMenu/Options" instance=ExtResource("15_ltxxa")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Move"
+
+[node name="Action" parent="CombatCamera/UI/ActionsMenu/Options" instance=ExtResource("15_ltxxa")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Action"
+
+[node name="Skip" parent="CombatCamera/UI/ActionsMenu/Options" instance=ExtResource("15_ltxxa")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Skip"
+
+[node name="ActionContextMenu" type="Control" parent="CombatCamera/UI"]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+
+[node name="ActionsLower" type="TextureRect" parent="CombatCamera/UI/ActionContextMenu"]
+modulate = Color(1, 1, 1, 0.223529)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("7_ro586")
+
+[node name="ActionsUpper" type="TextureRect" parent="CombatCamera/UI/ActionContextMenu"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("8_o73a7")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CombatCamera/UI/ActionContextMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Attack" type="Button" parent="CombatCamera/UI/ActionContextMenu/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 30
+text = " * Attack"
+
+[node name="Special" type="Button" parent="CombatCamera/UI/ActionContextMenu/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 30
+text = " * Special"
+
+[node name="Potion" type="Button" parent="CombatCamera/UI/ActionContextMenu/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"FlatButton"
+theme_override_font_sizes/font_size = 30
+text = " * Potion"
+
+[node name="DebugLabel" type="Label" parent="CombatCamera"]
+offset_left = -538.0
+offset_top = -304.0
+offset_right = -498.0
+offset_bottom = -281.0
 
 [node name="NavService" type="Node2D" parent="."]
 script = ExtResource("6_ywr2q")
@@ -164,293 +439,6 @@ pawn_name = "Roxanne"
 position = Vector2(-320, 166)
 texture = ExtResource("9_6jath")
 pawn_name = "Layla"
-
-[node name="CombatCamera" type="Camera2D" parent="."]
-position = Vector2(238, 114)
-script = ExtResource("7_s1tf4")
-
-[node name="UI" type="HBoxContainer" parent="CombatCamera"]
-z_index = 1
-offset_left = -570.0
-offset_top = 117.0
-offset_right = -266.0
-offset_bottom = 317.0
-script = ExtResource("7_4s5bv")
-
-[node name="Stats" type="Control" parent="CombatCamera/UI"]
-custom_minimum_size = Vector2(240, 200)
-layout_mode = 2
-
-[node name="StatsTexture" type="NinePatchRect" parent="CombatCamera/UI/Stats"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.004
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 0.04
-offset_right = -1.0
-offset_bottom = -62.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("AtlasTexture_ebj7c")
-region_rect = Rect2(0, 0, 32, 32)
-patch_margin_left = 10
-patch_margin_top = 10
-patch_margin_right = 10
-patch_margin_bottom = 10
-axis_stretch_horizontal = 2
-axis_stretch_vertical = 2
-
-[node name="NameTexture" type="NinePatchRect" parent="CombatCamera/UI/Stats"]
-layout_mode = 0
-offset_left = 14.0
-offset_top = -8.0
-offset_right = 110.0
-offset_bottom = 8.0
-texture = SubResource("AtlasTexture_alvi5")
-patch_margin_left = 20
-patch_margin_right = 20
-axis_stretch_horizontal = 2
-
-[node name="UnitName" type="Label" parent="CombatCamera/UI/Stats/NameTexture"]
-layout_mode = 0
-offset_left = 6.0
-offset_top = -5.0
-offset_right = 90.0
-offset_bottom = 17.0
-theme_override_font_sizes/font_size = 15
-text = "Mr. S.A.M"
-horizontal_alignment = 1
-vertical_alignment = 1
-text_overrun_behavior = 3
-
-[node name="HealthIcon" type="TextureRect" parent="CombatCamera/UI/Stats"]
-layout_mode = 0
-offset_left = 76.0
-offset_top = 16.0
-offset_right = 92.0
-offset_bottom = 32.0
-scale = Vector2(2.4, 2.4)
-texture = SubResource("AtlasTexture_u2wcq")
-
-[node name="HealthBar" type="TextureProgressBar" parent="CombatCamera/UI/Stats"]
-layout_mode = 0
-offset_left = 115.0
-offset_top = 16.0
-offset_right = 163.0
-offset_bottom = 32.0
-scale = Vector2(2.4, 2.4)
-value = 67.0
-texture_under = SubResource("AtlasTexture_d0848")
-texture_over = SubResource("AtlasTexture_dlu5a")
-texture_progress = SubResource("AtlasTexture_8i0jf")
-
-[node name="ArmorIcon" type="TextureRect" parent="CombatCamera/UI/Stats"]
-layout_mode = 0
-offset_left = 76.0
-offset_top = 62.0
-offset_right = 92.0
-offset_bottom = 78.0
-scale = Vector2(2.4, 2.4)
-texture = SubResource("AtlasTexture_17qi8")
-
-[node name="ArmorBar" type="TextureProgressBar" parent="CombatCamera/UI/Stats"]
-layout_mode = 0
-offset_left = 115.0
-offset_top = 62.0
-offset_right = 163.0
-offset_bottom = 78.0
-scale = Vector2(2.4, 2.4)
-value = 88.0
-texture_under = SubResource("AtlasTexture_v33ib")
-texture_over = SubResource("AtlasTexture_f8mvj")
-texture_progress = SubResource("AtlasTexture_uptsw")
-
-[node name="ActionsMenu" type="Control" parent="CombatCamera/UI"]
-custom_minimum_size = Vector2(150, 200)
-layout_mode = 2
-
-[node name="ActionsTexture" type="NinePatchRect" parent="CombatCamera/UI/ActionsMenu"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("AtlasTexture_e63rf")
-region_rect = Rect2(0, 0, 32, 32)
-patch_margin_left = 10
-patch_margin_top = 10
-patch_margin_right = 10
-patch_margin_bottom = 10
-
-[node name="ActionsLabel" type="NinePatchRect" parent="CombatCamera/UI/ActionsMenu"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -48.0
-offset_top = -8.0
-offset_right = 49.0
-offset_bottom = 8.0
-grow_horizontal = 2
-texture = SubResource("AtlasTexture_alvi5")
-patch_margin_left = 20
-patch_margin_right = 20
-axis_stretch_horizontal = 2
-
-[node name="Label" type="Label" parent="CombatCamera/UI/ActionsMenu/ActionsLabel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.062
-anchor_top = 0.13
-anchor_right = 0.062
-anchor_bottom = 0.13
-offset_left = -0.0140004
-offset_top = -7.08
-offset_right = 84.986
-offset_bottom = 14.92
-theme_override_font_sizes/font_size = 15
-text = "Your Turn!"
-horizontal_alignment = 1
-vertical_alignment = 1
-text_overrun_behavior = 3
-
-[node name="Options" type="VBoxContainer" parent="CombatCamera/UI/ActionsMenu"]
-custom_minimum_size = Vector2(140, 0)
-layout_mode = 1
-offset_right = 150.0
-offset_bottom = 200.0
-alignment = 1
-
-[node name="Move" type="TextureButton" parent="CombatCamera/UI/ActionsMenu/Options"]
-clip_contents = true
-custom_minimum_size = Vector2(120, 40)
-layout_mode = 2
-size_flags_horizontal = 4
-theme_type_variation = &"FlatButton"
-texture_normal = SubResource("AtlasTexture_o14hp")
-texture_pressed = SubResource("AtlasTexture_rsfuw")
-texture_hover = SubResource("AtlasTexture_wri1e")
-stretch_mode = 4
-
-[node name="Label" type="Label" parent="CombatCamera/UI/ActionsMenu/Options/Move"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -21.5
-offset_right = 21.5
-offset_bottom = 23.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 15
-text = "Move"
-horizontal_alignment = 1
-
-[node name="Action" type="TextureButton" parent="CombatCamera/UI/ActionsMenu/Options"]
-clip_contents = true
-custom_minimum_size = Vector2(120, 40)
-layout_mode = 2
-size_flags_horizontal = 4
-theme_type_variation = &"FlatButton"
-texture_normal = SubResource("AtlasTexture_o14hp")
-texture_pressed = SubResource("AtlasTexture_rsfuw")
-texture_hover = SubResource("AtlasTexture_wri1e")
-stretch_mode = 4
-
-[node name="Label" type="Label" parent="CombatCamera/UI/ActionsMenu/Options/Action"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -21.5
-offset_right = 21.5
-offset_bottom = 23.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 15
-text = "Action"
-horizontal_alignment = 1
-
-[node name="Skip" type="TextureButton" parent="CombatCamera/UI/ActionsMenu/Options"]
-clip_contents = true
-custom_minimum_size = Vector2(120, 40)
-layout_mode = 2
-size_flags_horizontal = 4
-theme_type_variation = &"FlatButton"
-texture_normal = SubResource("AtlasTexture_o14hp")
-texture_pressed = SubResource("AtlasTexture_rsfuw")
-texture_hover = SubResource("AtlasTexture_wri1e")
-stretch_mode = 4
-
-[node name="Label" type="Label" parent="CombatCamera/UI/ActionsMenu/Options/Skip"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -21.5
-offset_right = 21.5
-offset_bottom = 23.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 15
-text = "Skip"
-horizontal_alignment = 1
-
-[node name="ActionContextMenu" type="Control" parent="CombatCamera/UI"]
-visible = false
-clip_contents = true
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 2
-
-[node name="ActionsLower" type="TextureRect" parent="CombatCamera/UI/ActionContextMenu"]
-modulate = Color(1, 1, 1, 0.223529)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("7_ro586")
-
-[node name="ActionsUpper" type="TextureRect" parent="CombatCamera/UI/ActionContextMenu"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("8_o73a7")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CombatCamera/UI/ActionContextMenu"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Attack" type="Button" parent="CombatCamera/UI/ActionContextMenu/VBoxContainer"]
-layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_font_sizes/font_size = 30
-text = " * Attack"
-
-[node name="Special" type="Button" parent="CombatCamera/UI/ActionContextMenu/VBoxContainer"]
-layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_font_sizes/font_size = 30
-text = " * Special"
-
-[node name="Potion" type="Button" parent="CombatCamera/UI/ActionContextMenu/VBoxContainer"]
-layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_font_sizes/font_size = 30
-text = " * Potion"
-
-[node name="DebugLabel" type="Label" parent="CombatCamera"]
-offset_left = -538.0
-offset_top = -304.0
-offset_right = -498.0
-offset_bottom = -281.0
 
 [connection signal="new_turn" from="TurnService" to="." method="_on_new_turn"]
 [connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Move" to="." method="_on_move_button_down"]

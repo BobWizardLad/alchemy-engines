@@ -5,6 +5,7 @@ extends Control
 @onready var unit_name_label: Label = $Stats/NameTexture/UnitName
 @onready var unit_armor_bar: TextureProgressBar = $Stats/ArmorBar
 @onready var unit_health_bar: TextureProgressBar = $Stats/HealthBar
+@onready var unit_portrait: TextureRect = $Stats/IconPortrait
 
 var current_unit: Pawn = null
 
@@ -17,6 +18,12 @@ func _process(_delta):
 
 func update_current_unit(new_unit: Pawn) -> void:
 	current_unit = new_unit
+	
+	var portrait = AtlasTexture.new()
+	portrait.set_atlas(current_unit.texture)
+	portrait.set_region(Rect2(0,0,64,64))
+	unit_portrait.texture = portrait
+	
 	unit_armor_bar.max_value = current_unit.ARMOR_MAX
 	unit_health_bar.max_value = current_unit.HEALTH_MAX
 

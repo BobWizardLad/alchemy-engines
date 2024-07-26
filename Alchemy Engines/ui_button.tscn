@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=3 uid="uid://btygx12jdvyhy"]
+
+[ext_resource type="Texture2D" uid="uid://bqdvtef40r7ky" path="res://assets/UI.png" id="1_3rpfx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v14o6"]
+atlas = ExtResource("1_3rpfx")
+region = Rect2(64, 16, 48, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ff62j"]
+texture = SubResource("AtlasTexture_v14o6")
+texture_margin_left = 20.0
+texture_margin_right = 20.0
+axis_stretch_horizontal = 2
+region_rect = Rect2(0, 0, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv5t7"]
+atlas = ExtResource("1_3rpfx")
+region = Rect2(64, 0, 48, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_62o54"]
+texture = SubResource("AtlasTexture_lv5t7")
+texture_margin_left = 20.0
+texture_margin_right = 20.0
+axis_stretch_horizontal = 2
+region_rect = Rect2(0, 0, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ro070"]
+atlas = ExtResource("1_3rpfx")
+region = Rect2(64, 32, 48, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fu8bn"]
+texture = SubResource("AtlasTexture_ro070")
+texture_margin_left = 20.0
+texture_margin_right = 20.0
+axis_stretch_horizontal = 2
+region_rect = Rect2(0, 0, 48, 16)
+
+[node name="Button" type="Button"]
+theme_override_styles/normal = SubResource("StyleBoxTexture_ff62j")
+theme_override_styles/hover = SubResource("StyleBoxTexture_62o54")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_fu8bn")
+text = "Default"
