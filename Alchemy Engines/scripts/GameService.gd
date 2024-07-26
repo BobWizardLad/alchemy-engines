@@ -95,6 +95,9 @@ func _end_player_attack_step():
 	attack_action = false
 	TURN_SERVICE.change_turn()
 
+func _player_skip_turn():
+	TURN_SERVICE.change_turn()
+
 func _on_new_turn():
 	active = TURN_SERVICE.get_current_turn_pawn()
 	UI.update_current_unit(active)

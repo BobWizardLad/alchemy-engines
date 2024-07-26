@@ -21,7 +21,7 @@ func clear_selection_layer() -> void:
 func update_planned_path(active_pawn: Pawn) -> void:
 	MAP.clear_layer(1)
 	map_tiles_active = ASTAR.get_astar_path(MAP.local_to_map(active_pawn.position), MAP.local_to_map(get_local_mouse_position()))
-	show_planned_path(1, 1, Vector2(0, 0), map_tiles_active.slice(0, active_pawn.current_move))
+	show_planned_path(1, 1, Vector2(0, 0), map_tiles_active.slice(0, active_pawn.current_move-1))
 
 func show_planned_path(vis_layer_id: int, img_src_id: int, atlas_pos: Vector2, path: PackedVector2Array):
 	for each in path:

@@ -124,23 +124,23 @@ script = ExtResource("14_s53s0")
 [node name="EnemyController" type="Node2D" parent="PawnService"]
 
 [node name="Player" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
-position = Vector2(563, 86)
+position = Vector2(921, 305)
 pawn_name = "Enemy1"
 
 [node name="Player2" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
-position = Vector2(522, -13)
+position = Vector2(880, 206)
 pawn_name = "Enemy2"
 
 [node name="Player3" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
-position = Vector2(599, 22)
+position = Vector2(957, 241)
 pawn_name = "Enemy3"
 
 [node name="Player4" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
-position = Vector2(521, 23)
+position = Vector2(879, 242)
 pawn_name = "Enemy4"
 
 [node name="Player5" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
-position = Vector2(519, 63)
+position = Vector2(877, 282)
 pawn_name = "Enemy5"
 
 [node name="PlayerController" type="Node2D" parent="PawnService"]
@@ -148,20 +148,20 @@ y_sort_enabled = true
 script = ExtResource("6_e71m8")
 
 [node name="Player" parent="PawnService/PlayerController" instance=ExtResource("7_4cdsd")]
-position = Vector2(158, -37)
+position = Vector2(-160, 43)
 scale = Vector2(1.10938, 1)
 pawn_name = "Willy"
 
 [node name="Player2" parent="PawnService/PlayerController" instance=ExtResource("7_4cdsd")]
-position = Vector2(118, -15)
+position = Vector2(-200, 65)
 pawn_name = "Jonas"
 
 [node name="Player3" parent="PawnService/PlayerController" instance=ExtResource("7_4cdsd")]
-position = Vector2(35, 24)
+position = Vector2(-363, 186)
 pawn_name = "Roxanne"
 
 [node name="Player4" parent="PawnService/PlayerController" instance=ExtResource("7_4cdsd")]
-position = Vector2(78, 4)
+position = Vector2(-320, 166)
 texture = ExtResource("9_6jath")
 pawn_name = "Layla"
 
@@ -455,3 +455,4 @@ offset_bottom = -281.0
 [connection signal="new_turn" from="TurnService" to="." method="_on_new_turn"]
 [connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Move" to="." method="_on_move_button_down"]
 [connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Action" to="." method="_on_action_button_down"]
+[connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Skip" to="." method="_player_skip_turn"]
