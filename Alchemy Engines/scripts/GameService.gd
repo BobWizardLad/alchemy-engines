@@ -45,14 +45,10 @@ func _process(_delta) -> void:
 
 func _input(event):
 	if move_action:
-		if event is InputEventMouseMotion and not is_move_step:
-			# Clear prior planned path tint and make new path
-			NAV_SERVICE.update_planned_path(active)
-		else:
-			# Call to wipe planned path visible
-			NAV_SERVICE.MAP.clear_layer(1)
 		if event is InputEventMouseButton and NAV_SERVICE.MAP.get_used_cells(0).find(NAV_SERVICE.MAP.local_to_map(get_local_mouse_position())) != -1:
 			if not is_move_step:
+				# Call to wipe planned path visible
+				NAV_SERVICE.clear_selection_layer()
 				# Set the pawn's pre-move position to enabled point
 				NAV_SERVICE.set_point_disabled(active.position, false)
 				var path = NAV_SERVICE.ASTAR.get_astar_path(NAV_SERVICE.MAP.local_to_map(active.position), NAV_SERVICE.MAP.local_to_map(get_local_mouse_position()))
@@ -60,12 +56,6 @@ func _input(event):
 				is_move_step = true
 				PAWN_SERVICE.pawn_move(NAV_SERVICE.MAP, path, active)
 	if attack_action:
-		if event is InputEventMouseMotion and not is_attack_step:
-			NAV_SERVICE.clear_selection_layer()
-			# Highlight unit under the cursor
-			if get_cursor_hovering_unit(PAWN_SERVICE, NAV_SERVICE.MAP) != null:
-				NAV_SERVICE.focus_tile(get_local_mouse_position())
-				
 		if event is InputEventMouseButton and not is_attack_step:
 			if get_cursor_hovering_unit(PAWN_SERVICE, NAV_SERVICE.MAP) != null:
 				NAV_SERVICE.clear_selection_layer()
@@ -107,8 +97,10 @@ func _on_move_button_down():
 	var timer = get_tree().create_timer(0.2)
 	await timer.timeout
 	move_action = true
+	NAV_SERVICE.update_planned_path(active.position, active.current_move-1)
 
 func _on_action_button_down():
 	var timer = get_tree().create_timer(0.2)
 	await timer.timeout
 	attack_action = true
+	NAV_SERVICE.update_planned_path(active.position, active.current_atk_range-1)
