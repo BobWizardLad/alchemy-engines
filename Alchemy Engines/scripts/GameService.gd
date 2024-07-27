@@ -21,7 +21,6 @@ var move_action: bool
 var is_attack_step: bool
 var attack_action: bool
 
-
 func _ready():
 	is_player_turn = true
 	is_move_step = false
@@ -63,6 +62,21 @@ func _input(event):
 				NAV_SERVICE.clear_selection_layer()
 				is_attack_step = true
 				PAWN_SERVICE.pawn_attack(active, get_cursor_hovering_unit(PAWN_SERVICE, NAV_SERVICE.MAP))
+
+# Function to calculate most valuable turn for any unit
+# Takes active_unit, map, astar, and list of current units
+# returns an array containing
+# [A] the most valuable path a unit should take,
+# [B] the unit that shouldbe attacked if any,
+# [C] the move that should be used
+func calculate_turn(current_unit: Pawn, map: TileMap, astar: AstarService, current_units: Array[Node]) -> Array:
+	var best_path: PackedVector2Array
+	var target: Node2D
+	var actions: PawnService.Action
+	# Best Path
+	# Target
+	# Actions
+	return [best_path, target, actions]
 
 # Checks the position of all units to see if they are under the cursor.
 # Returns the pawn under the cursor if ther is one, returns null if one is not there
@@ -107,10 +121,10 @@ func _on_move_button_down():
 	var timer = get_tree().create_timer(0.2)
 	await timer.timeout
 	move_action = true
-	NAV_SERVICE.update_planned_path(active.position, active.current_move-1)
+	NAV_SERVICE.show_planned_path(1, 1, Vector2(0, 0), NAV_SERVICE.get_cells_in_range(active.position, active.current_move))
 
 func _on_action_button_down():
 	var timer = get_tree().create_timer(0.2)
 	await timer.timeout
 	attack_action = true
-	NAV_SERVICE.update_planned_path(active.position, active.current_atk_range-1)
+	NAV_SERVICE.show_planned_path(1, 1, Vector2(0, 0), NAV_SERVICE.get_cells_in_range(active.position, active.current_atk_range))

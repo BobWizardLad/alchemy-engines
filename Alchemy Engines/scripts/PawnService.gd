@@ -8,6 +8,8 @@ class_name PawnService
 signal move_step_finished
 signal attack_step_finished
 
+enum Action {Attack, Special, Skip, Potion}
+
 func _ready():
 	connect("move_step_finished", get_parent()._end_move_step)
 	connect("attack_step_finished", get_parent()._end_attack_step)
@@ -34,7 +36,7 @@ func pawn_attack(attacker: Pawn, target: Pawn):
 # map is the tilemap being naviated
 func pawn_move(map: TileMap, path: PackedVector2Array, pawn: Pawn):
 	var motion_tween
-	var my_path = path.slice(0, pawn.current_move)
+	var my_path = path.slice(0, pawn.current_move+1)
 	if motion_tween != null and motion_tween.is_running():
 		return false
 	else:
