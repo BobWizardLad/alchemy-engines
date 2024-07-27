@@ -40,3 +40,6 @@ func focus_actions_menu() -> void:
 # Tween the UI into frame
 func focus_UI_menu() -> void:
 	visible = true
+
+func _on_combat_camera_camera_move_finished():
+	pass # Replace with function body.

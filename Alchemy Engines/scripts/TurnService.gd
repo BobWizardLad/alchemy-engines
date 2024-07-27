@@ -41,3 +41,6 @@ func change_turn() -> Node2D:
 		turn = 0
 	emit_signal("new_turn")
 	return self
+
+func get_next_turn_pawn() -> Pawn:
+	return turn_order[(turn + 1) % turn_order.size()]

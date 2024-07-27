@@ -45,7 +45,7 @@ func build_astar_map(layer: int) -> void:
 
 # Get path to point
 func get_astar_path(from: Vector2i, to: Vector2i) -> PackedVector2Array:
-	return get_astar_path(from, to)
+	return ASTAR.get_astar_path(from, to)
 
 func set_point_disabled(new_pos: Vector2, is_disabled: bool) -> void:
 	ASTAR.set_point_disabled(MAP.local_to_map(new_pos), is_disabled) # Disable new position

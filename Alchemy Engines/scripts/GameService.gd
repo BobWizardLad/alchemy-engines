@@ -15,6 +15,7 @@ var active: Pawn
 
 # Flag to halt player input while pawn is moving
 # Player cannot input during 'move step'
+var is_player_turn: bool
 var is_move_step: bool
 var move_action: bool
 var is_attack_step: bool
@@ -22,6 +23,7 @@ var attack_action: bool
 
 
 func _ready():
+	is_player_turn = true
 	is_move_step = false
 	move_action = false
 	attack_action = false
@@ -38,9 +40,9 @@ func _ready():
 func _process(_delta) -> void:
 	display_debug_label(str(NAV_SERVICE.MAP.local_to_map(get_global_mouse_position())))
 	
-	if move_action || attack_action:
+	if not is_player_turn || move_action || attack_action:
 		UI.hide_actions_menu()
-	elif not move_action || not attack_action:
+	elif is_player_turn && not move_action && not attack_action:
 		UI.focus_actions_menu()
 
 func _input(event):
@@ -70,14 +72,14 @@ func get_cursor_hovering_unit(pawn_service: PawnService, map: TileMap) -> Pawn:
 			return each
 	return null
 
-func _end_player_move_step():
+func _end_move_step():
 	is_move_step = false
 	move_action = false
 	# Set the pawn's new position to disable
 	NAV_SERVICE.set_point_disabled(active.position, true)
 	TURN_SERVICE.change_turn()
 
-func _end_player_attack_step():
+func _end_attack_step():
 	is_attack_step = false
 	attack_action = false
 	TURN_SERVICE.change_turn()
@@ -86,9 +88,17 @@ func _player_skip_turn():
 	TURN_SERVICE.change_turn()
 
 func _on_new_turn():
+	is_player_turn = TURN_SERVICE.get_current_turn_pawn().is_in_group("Allies")
 	active = TURN_SERVICE.get_current_turn_pawn()
 	UI.update_current_unit(active)
 	CAMERA.focus_next_unit(active)
+
+func _on_combat_camera_camera_move_finished():
+	if TURN_SERVICE.get_current_turn_pawn().is_in_group("Allies"):
+		pass
+	elif TURN_SERVICE.get_current_turn_pawn().is_in_group("Enemies"):
+		var path = NAV_SERVICE.ASTAR.get_astar_path(NAV_SERVICE.MAP.local_to_map(active.position), NAV_SERVICE.MAP.local_to_map(get_tree().get_nodes_in_group("Allies").pick_random().position))
+		PAWN_SERVICE.pawn_move(NAV_SERVICE.MAP, path, active)
 
 func display_debug_label(msg: String) -> void:
 	$CombatCamera/DebugLabel.text = msg

@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://qwnn0f7bbkxn"]
+[gd_scene load_steps=33 format=3 uid="uid://qwnn0f7bbkxn"]
 
 [ext_resource type="Texture2D" uid="uid://bpiomleg6q6cq" path="res://assets/IsoTileMap.png" id="1_28q0j"]
 [ext_resource type="Script" path="res://scripts/GameService.gd" id="1_he3ci"]
@@ -18,10 +18,6 @@
 [ext_resource type="Script" path="res://scripts/PawnService.gd" id="14_s53s0"]
 [ext_resource type="Texture2D" uid="uid://c7vyvf4jggq2q" path="res://assets/gradient.png" id="14_vntch"]
 [ext_resource type="PackedScene" uid="uid://btygx12jdvyhy" path="res://ui_button.tscn" id="15_ltxxa"]
-[ext_resource type="Script" path="res://EnemyController.gd" id="16_815gm"]
-[ext_resource type="Texture2D" uid="uid://d11bxix1xlrwg" path="res://assets/AntagRuntIdle.png" id="18_g5f8e"]
-[ext_resource type="Texture2D" uid="uid://cohlo657xmdi3" path="res://assets/AntagFattIdle.png" id="19_s44jy"]
-[ext_resource type="Texture2D" uid="uid://bo3hun4xla4ic" path="res://assets/AntagShotIdle.png" id="20_ocr5m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ebj7c"]
 atlas = ExtResource("9_klear")
@@ -408,31 +404,25 @@ y_sort_enabled = true
 script = ExtResource("14_s53s0")
 
 [node name="EnemyController" type="Node2D" parent="PawnService"]
-script = ExtResource("16_815gm")
 
-[node name="Enemy5" parent="PawnService/EnemyController" groups=["Enemies"] instance=ExtResource("7_4cdsd")]
+[node name="Player" parent="PawnService/EnemyController" groups=["Enemies"] instance=ExtResource("7_4cdsd")]
 position = Vector2(921, 305)
-texture = ExtResource("18_g5f8e")
 pawn_name = "Enemy1"
 
-[node name="Enemy4" parent="PawnService/EnemyController" groups=["Enemies"] instance=ExtResource("7_4cdsd")]
+[node name="Player2" parent="PawnService/EnemyController" groups=["Enemies"] instance=ExtResource("7_4cdsd")]
 position = Vector2(880, 206)
-texture = ExtResource("19_s44jy")
 pawn_name = "Enemy2"
 
-[node name="Enemy3" parent="PawnService/EnemyController" groups=["Enemies"] instance=ExtResource("7_4cdsd")]
+[node name="Player3" parent="PawnService/EnemyController" groups=["Enemies"] instance=ExtResource("7_4cdsd")]
 position = Vector2(957, 241)
-texture = ExtResource("18_g5f8e")
 pawn_name = "Enemy3"
 
-[node name="Enemy2" parent="PawnService/EnemyController" groups=["Enemies"] instance=ExtResource("7_4cdsd")]
+[node name="Player4" parent="PawnService/EnemyController" groups=["Enemies"] instance=ExtResource("7_4cdsd")]
 position = Vector2(879, 242)
-texture = ExtResource("20_ocr5m")
 pawn_name = "Enemy4"
 
-[node name="Enemy" parent="PawnService/EnemyController" groups=["Enemies"] instance=ExtResource("7_4cdsd")]
+[node name="Player5" parent="PawnService/EnemyController" groups=["Enemies"] instance=ExtResource("7_4cdsd")]
 position = Vector2(877, 282)
-texture = ExtResource("19_s44jy")
 pawn_name = "Enemy5"
 
 [node name="PlayerController" type="Node2D" parent="PawnService"]
@@ -458,8 +448,6 @@ texture = ExtResource("9_6jath")
 pawn_name = "Layla"
 
 [connection signal="new_turn" from="TurnService" to="." method="_on_new_turn"]
-[connection signal="camera_move_finished" from="CombatCamera" to="." method="_on_combat_camera_camera_move_finished"]
-[connection signal="camera_move_finished" from="CombatCamera" to="CombatCamera/UI" method="_on_combat_camera_camera_move_finished"]
 [connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Move" to="." method="_on_move_button_down"]
 [connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Action" to="." method="_on_action_button_down"]
 [connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Skip" to="." method="_player_skip_turn"]

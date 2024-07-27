@@ -9,8 +9,8 @@ signal move_step_finished
 signal attack_step_finished
 
 func _ready():
-	connect("move_step_finished", get_parent()._end_player_move_step)
-	connect("attack_step_finished", get_parent()._end_player_attack_step)
+	connect("move_step_finished", get_parent()._end_move_step)
+	connect("attack_step_finished", get_parent()._end_attack_step)
 
 func get_all_units() -> Array[Node]:
 	var all_units = PLAYER_CONTROLLER.get_children() + ENEMY_CONTROLLER.get_children()
@@ -40,6 +40,6 @@ func pawn_move(map: TileMap, path: PackedVector2Array, pawn: Pawn):
 	else:
 		for each in my_path:
 			motion_tween = get_tree().create_tween()
-			motion_tween.tween_property(pawn, "position", map.map_to_local(each), 0.1)
+			motion_tween.tween_property(pawn, "position", map.map_to_local(each), 0.2)
 			await motion_tween.finished
 	emit_signal("move_step_finished")
