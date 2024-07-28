@@ -17,8 +17,14 @@ func focus_tile(local_pos: Vector2) -> void:
 func clear_selection_layer() -> void:
 	MAP.clear_layer(1)
 
+func get_path_weight(path: Array[Vector2]) -> float:
+	var weight: float
+	for each in path:
+		weight += ASTAR.get_point_weight_scale(ASTAR.astar2d.get_closest_point(each))
+	return weight
+
 # Handle path example
-func get_cells_in_range(center_position: Vector2, range: int) -> Array[Vector2i]:
+func get_map_cells_in_range(center_position: Vector2, range: int) -> Array[Vector2i]:
 	var map_tiles_active: Array[Vector2i] = []
 	var new_tiles: Array[Vector2i] = []
 	map_tiles_active.append(MAP.local_to_map(center_position))

@@ -41,4 +41,5 @@ func set_point_disabled(new_position: Vector2, is_disabled: bool) -> void:
 func add_point(point: Vector2i) -> Node2D:
 	next_id += 1
 	astar2d.add_point(next_id, point)
+	astar2d.set_point_weight_scale(next_id, 1.0)
 	return self

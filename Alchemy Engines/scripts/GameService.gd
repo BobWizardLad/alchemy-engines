@@ -69,12 +69,15 @@ func _input(event):
 # [A] the most valuable path a unit should take,
 # [B] the unit that shouldbe attacked if any,
 # [C] the move that should be used
-func calculate_turn(current_unit: Pawn, map: TileMap, astar: AstarService, current_units: Array[Node]) -> Array:
+func calculate_turn(current_unit: Pawn, astar: AStar2D, map: TileMap, current_units: Array[Node]) -> Array:
 	var best_path: PackedVector2Array
 	var target: Node2D
 	var actions: PawnService.Action
-	# Best Path
+	# Best Path - Each is given as grid coordinates, convert to local
+	for each in NAV_SERVICE.get_map_cells_in_range(current_unit.position, current_unit.current_move):
+		var weight = NAV_SERVICE.get_path_weight(NAV_SERVICE.get_astar_path(current_unit.position, map.map_to_local(each)))
 	# Target
+	
 	# Actions
 	return [best_path, target, actions]
 
