@@ -124,10 +124,10 @@ func _on_move_button_down():
 	var timer = get_tree().create_timer(0.2)
 	await timer.timeout
 	move_action = true
-	NAV_SERVICE.show_planned_path(1, 1, Vector2(0, 0), NAV_SERVICE.get_cells_in_range(active.position, active.current_move))
+	NAV_SERVICE.show_planned_path(1, 1, Vector2(0, 0), NAV_SERVICE.get_map_cells_in_range(active.position, active.current_move))
 
 func _on_action_button_down():
 	var timer = get_tree().create_timer(0.2)
 	await timer.timeout
 	attack_action = true
-	NAV_SERVICE.show_planned_path(1, 1, Vector2(0, 0), NAV_SERVICE.get_cells_in_range(active.position, active.current_atk_range))
+	NAV_SERVICE.show_planned_path(1, 1, Vector2(0, 0), NAV_SERVICE.get_map_cells_in_range(active.position, active.current_atk_range))

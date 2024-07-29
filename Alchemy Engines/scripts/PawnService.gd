@@ -15,7 +15,7 @@ func _ready():
 	connect("attack_step_finished", get_parent()._end_attack_step)
 
 func get_all_units() -> Array[Node]:
-	var all_units = PLAYER_CONTROLLER.get_children() + ENEMY_CONTROLLER.get_children()
+	var all_units = PLAYER_CONTROLLER.get_children()# + ENEMY_CONTROLLER.get_children()
 	return all_units
 
 func snap_units(map: TileMap):
