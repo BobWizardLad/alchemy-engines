@@ -28,7 +28,7 @@ func _ready():
 	attack_action = false
 	is_attack_step = false
 	
-	TURN_SERVICE.populate_initiative(PAWN_SERVICE.get_all_units())
+	TURN_SERVICE.populate_initiative(PAWN_SERVICE.get_player_units())
 	PAWN_SERVICE.snap_units(NAV_SERVICE.MAP)
 	NAV_SERVICE.build_astar_map(0)
 	for each in PAWN_SERVICE.get_all_units():

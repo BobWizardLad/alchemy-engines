@@ -4,6 +4,7 @@ class_name PawnService
 # Reference to unit controllers
 @onready var PLAYER_CONTROLLER: PlayerController = $PlayerController
 @onready var ENEMY_CONTROLLER: Node2D = $EnemyController
+@onready var NEUTRAL_MOBS_CONTROLLER := $NeutralMobsController
 
 signal move_step_finished
 signal attack_step_finished
@@ -15,8 +16,11 @@ func _ready():
 	connect("attack_step_finished", get_parent()._end_attack_step)
 
 func get_all_units() -> Array[Node]:
-	var all_units = PLAYER_CONTROLLER.get_children()# + ENEMY_CONTROLLER.get_children()
+	var all_units = PLAYER_CONTROLLER.get_children() + ENEMY_CONTROLLER.get_children() + NEUTRAL_MOBS_CONTROLLER.get_children()
 	return all_units
+
+func get_player_units() -> Array[Node]:
+	return PLAYER_CONTROLLER.get_children()
 
 func snap_units(map: TileMap):
 	for each in get_all_units():
