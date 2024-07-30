@@ -1,7 +1,7 @@
 extends Sprite2D
 class_name Pawn
 
-@onready var motion_tween: Tween
+@onready var ANIMATION_PLAYER: AnimationPlayer = $AnimationPlayer
 
 @export var HEALTH_MAX: float # Persistent health
 @export var ARMOR_MAX: float # Per-combat temp health
@@ -13,6 +13,8 @@ class_name Pawn
 @export var ATK_RANGE: int
 @export var unit_type: Class # The chassis the unit is using
 @export var pawn_name: String
+
+var motion_tween: Tween
 
 var current_health: float
 var current_armor: float
@@ -36,3 +38,8 @@ func _ready():
 	current_initiative = INITIATIVE
 	current_move = MOVE
 	current_atk_range = ATK_RANGE
+	ANIMATION_PLAYER.get_animation("idle").loop_mode = Animation.LOOP_LINEAR
+	get_tree().create_timer(randi_range(0, 3)).connect("timeout", start_idle_anim)
+
+func start_idle_anim():
+	ANIMATION_PLAYER.play("idle")
