@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://qwnn0f7bbkxn"]
+[gd_scene load_steps=38 format=3 uid="uid://qwnn0f7bbkxn"]
 
 [ext_resource type="Texture2D" uid="uid://bpiomleg6q6cq" path="res://assets/IsoTileMap.png" id="1_28q0j"]
 [ext_resource type="Script" path="res://scripts/GameService.gd" id="1_he3ci"]
@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://d11bxix1xlrwg" path="res://assets/AntagRuntIdle.png" id="18_g5f8e"]
 [ext_resource type="Texture2D" uid="uid://cohlo657xmdi3" path="res://assets/AntagFattIdle.png" id="19_s44jy"]
 [ext_resource type="Texture2D" uid="uid://bo3hun4xla4ic" path="res://assets/AntagShotIdle.png" id="20_ocr5m"]
+[ext_resource type="Texture2D" uid="uid://xdw0gn0xh7q6" path="res://assets/cardboard.png" id="22_4dwnm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ebj7c"]
 atlas = ExtResource("9_klear")
@@ -98,12 +99,6 @@ sources/1 = SubResource("TileSetAtlasSource_2mr7d")
 [node name="GameService" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_he3ci")
-
-[node name="Background" type="Sprite2D" parent="."]
-z_index = -1
-position = Vector2(545, 393)
-scale = Vector2(2, 2)
-texture = ExtResource("3_sox54")
 
 [node name="TurnService" type="Node2D" parent="."]
 script = ExtResource("2_eknaf")
@@ -441,6 +436,7 @@ texture = ExtResource("9_6jath")
 pawn_name = "Willy"
 
 [node name="NeutralMobsController" type="Node2D" parent="PawnService"]
+y_sort_enabled = true
 
 [node name="Player" parent="PawnService/NeutralMobsController" instance=ExtResource("7_4cdsd")]
 position = Vector2(237, 681)
@@ -451,30 +447,60 @@ position = Vector2(396, 561)
 [node name="Dummy" parent="PawnService/NeutralMobsController" instance=ExtResource("7_4cdsd")]
 modulate = Color(1, 0.760784, 0, 1)
 texture_filter = 6
-position = Vector2(839, 382)
+position = Vector2(835, 379)
 texture = ExtResource("19_s44jy")
 pawn_name = "Enemy5"
+metadata/_edit_group_ = true
+
+[node name="CardBack" type="Sprite2D" parent="PawnService/NeutralMobsController/Dummy"]
+position = Vector2(9, -30)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("22_4dwnm")
 
 [node name="Dummy2" parent="PawnService/NeutralMobsController" instance=ExtResource("7_4cdsd")]
 modulate = Color(1, 0.760784, 0, 1)
 texture_filter = 6
-position = Vector2(717, 763)
+position = Vector2(715, 759)
 texture = ExtResource("19_s44jy")
 pawn_name = "Enemy5"
+metadata/_edit_group_ = true
+
+[node name="CardBack" type="Sprite2D" parent="PawnService/NeutralMobsController/Dummy2"]
+position = Vector2(9, -30)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("22_4dwnm")
 
 [node name="Dummy3" parent="PawnService/NeutralMobsController" instance=ExtResource("7_4cdsd")]
 modulate = Color(1, 0.760784, 0, 1)
 texture_filter = 6
-position = Vector2(601, 780)
+position = Vector2(594, 779)
 texture = ExtResource("19_s44jy")
 pawn_name = "Enemy5"
+metadata/_edit_group_ = true
+
+[node name="CardBack" type="Sprite2D" parent="PawnService/NeutralMobsController/Dummy3"]
+position = Vector2(9, -30)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("22_4dwnm")
 
 [node name="Dummy4" parent="PawnService/NeutralMobsController" instance=ExtResource("7_4cdsd")]
 modulate = Color(1, 0.760784, 0, 1)
 texture_filter = 6
-position = Vector2(719, 681)
+position = Vector2(714, 679)
 texture = ExtResource("19_s44jy")
 pawn_name = "Enemy5"
+metadata/_edit_group_ = true
+
+[node name="CardBack" type="Sprite2D" parent="PawnService/NeutralMobsController/Dummy4"]
+position = Vector2(9, -30)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("22_4dwnm")
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(536, 395)
+scale = Vector2(2, 2)
+texture = ExtResource("3_sox54")
 
 [connection signal="new_turn" from="TurnService" to="." method="_on_new_turn"]
 [connection signal="camera_move_finished" from="CombatCamera" to="." method="_on_combat_camera_camera_move_finished"]
