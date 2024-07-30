@@ -3,6 +3,8 @@ class_name Pawn
 
 @onready var ANIMATION_PLAYER: AnimationPlayer = $AnimationPlayer
 
+@export var pawn_name: String
+@export var unit_type: Class # The chassis the unit is using
 @export var HEALTH_MAX: float # Persistent health
 @export var ARMOR_MAX: float # Per-combat temp health
 @export var RESISTANCE: float # % dmg reduction
@@ -11,8 +13,7 @@ class_name Pawn
 @export var INITIATIVE: float # Unit turn priority
 @export var MOVE: int # Unit max tiles travel per turn
 @export var ATK_RANGE: int
-@export var unit_type: Class # The chassis the unit is using
-@export var pawn_name: String
+@export var will_animate: bool = true # Turn off animations for dummies, etc
 
 var motion_tween: Tween
 
@@ -42,4 +43,5 @@ func _ready():
 	get_tree().create_timer(randi_range(0, 3)).connect("timeout", start_idle_anim)
 
 func start_idle_anim():
-	ANIMATION_PLAYER.play("idle")
+	if will_animate:
+		ANIMATION_PLAYER.play("idle")

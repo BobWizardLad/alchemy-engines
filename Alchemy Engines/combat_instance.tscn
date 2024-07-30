@@ -433,7 +433,7 @@ script = ExtResource("6_e71m8")
 position = Vector2(41, -18)
 scale = Vector2(1.10938, 1)
 texture = ExtResource("9_6jath")
-pawn_name = "Willy"
+pawn_name = "Bertha"
 
 [node name="NeutralMobsController" type="Node2D" parent="PawnService"]
 y_sort_enabled = true
@@ -449,7 +449,7 @@ modulate = Color(1, 0.760784, 0, 1)
 texture_filter = 6
 position = Vector2(835, 379)
 texture = ExtResource("19_s44jy")
-pawn_name = "Enemy5"
+will_animate = false
 metadata/_edit_group_ = true
 
 [node name="CardBack" type="Sprite2D" parent="PawnService/NeutralMobsController/Dummy"]
@@ -462,7 +462,7 @@ modulate = Color(1, 0.760784, 0, 1)
 texture_filter = 6
 position = Vector2(715, 759)
 texture = ExtResource("19_s44jy")
-pawn_name = "Enemy5"
+will_animate = false
 metadata/_edit_group_ = true
 
 [node name="CardBack" type="Sprite2D" parent="PawnService/NeutralMobsController/Dummy2"]
@@ -475,7 +475,7 @@ modulate = Color(1, 0.760784, 0, 1)
 texture_filter = 6
 position = Vector2(594, 779)
 texture = ExtResource("19_s44jy")
-pawn_name = "Enemy5"
+will_animate = false
 metadata/_edit_group_ = true
 
 [node name="CardBack" type="Sprite2D" parent="PawnService/NeutralMobsController/Dummy3"]
@@ -488,7 +488,7 @@ modulate = Color(1, 0.760784, 0, 1)
 texture_filter = 6
 position = Vector2(714, 679)
 texture = ExtResource("19_s44jy")
-pawn_name = "Enemy5"
+will_animate = false
 metadata/_edit_group_ = true
 
 [node name="CardBack" type="Sprite2D" parent="PawnService/NeutralMobsController/Dummy4"]
