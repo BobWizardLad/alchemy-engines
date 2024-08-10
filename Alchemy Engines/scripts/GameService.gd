@@ -37,26 +37,29 @@ func _ready():
 	_on_new_turn()
 
 func _process(_delta) -> void:
-	display_debug_label(str(NAV_SERVICE.MAP.local_to_map(get_global_mouse_position())))
+	display_debug_label(str(NAV_SERVICE.expose_map_coord(get_global_mouse_position())))
 	
 	if not is_player_turn || move_action || attack_action:
 		UI.hide_actions_menu()
 	elif is_player_turn && not move_action && not attack_action:
 		UI.focus_actions_menu()
 
-func _input(event):
+func _input(event): 
 	if move_action:
-		if event is InputEventMouseButton and NAV_SERVICE.MAP.get_used_cells(0).find(NAV_SERVICE.MAP.local_to_map(get_local_mouse_position())) != -1:
+		if event is InputEventMouseButton and NAV_SERVICE.is_at_valid_map_tile(0, get_global_mouse_position()):
 			if not is_move_step:
 				# Call to wipe planned path visible
 				NAV_SERVICE.clear_selection_layer()
 				# Set the pawn's pre-move position to enabled point
 				NAV_SERVICE.set_point_disabled(active.position, false)
-				var path = NAV_SERVICE.ASTAR.get_astar_path(NAV_SERVICE.MAP.local_to_map(active.position), NAV_SERVICE.MAP.local_to_map(get_local_mouse_position()))
+				var path = NAV_SERVICE.get_astar_path(active.position, get_local_mouse_position())
 				# Disable player input and call a pawn move
 				is_move_step = true
 				PAWN_SERVICE.pawn_move(NAV_SERVICE.MAP, path, active)
 	if attack_action:
+		if event is InputEventMouseMotion and is_attack_step:
+			if get_cursor_hovering_unit(PAWN_SERVICE, NAV_SERVICE.MAP) != null:
+				NAV_SERVICE.focus_tile(get_cursor_hovering_unit(PAWN_SERVICE, NAV_SERVICE.MAP).position) # - TODO - nonfunctional focus_tile
 		if event is InputEventMouseButton and not is_attack_step:
 			if get_cursor_hovering_unit(PAWN_SERVICE, NAV_SERVICE.MAP) != null:
 				NAV_SERVICE.clear_selection_layer()
@@ -69,7 +72,7 @@ func _input(event):
 # [A] the most valuable path a unit should take,
 # [B] the unit that shouldbe attacked if any,
 # [C] the move that should be used
-func calculate_turn(current_unit: Pawn, astar: AStar2D, map: TileMap, current_units: Array[Node]) -> Array:
+func calculate_turn(current_unit: Pawn, astar: AStar2D, map: TileMap, current_units: Array[Node]) -> Array: # - TODO - Map overhaul
 	var best_path: PackedVector2Array
 	var target: Node2D
 	var actions: PawnService.Action
@@ -83,7 +86,7 @@ func calculate_turn(current_unit: Pawn, astar: AStar2D, map: TileMap, current_un
 
 # Checks the position of all units to see if they are under the cursor.
 # Returns the pawn under the cursor if ther is one, returns null if one is not there
-func get_cursor_hovering_unit(pawn_service: PawnService, map: TileMap) -> Pawn:
+func get_cursor_hovering_unit(pawn_service: PawnService, map: TileMap) -> Pawn: # - TODO - Map overhaul
 	for each in PAWN_SERVICE.get_all_units():
 		if each.position == map.map_to_local(map.local_to_map(get_local_mouse_position())):
 			return each
@@ -110,7 +113,7 @@ func _on_new_turn():
 	UI.update_current_unit(active)
 	CAMERA.focus_next_unit(active)
 
-func _on_combat_camera_camera_move_finished():
+func _on_combat_camera_camera_move_finished(): # - TODO - Map overhaul
 	if TURN_SERVICE.get_current_turn_pawn().is_in_group("Allies"):
 		pass
 	elif TURN_SERVICE.get_current_turn_pawn().is_in_group("Enemies"):

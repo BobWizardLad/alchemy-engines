@@ -43,14 +43,20 @@ func show_planned_path(vis_layer_id: int, img_src_id: int, atlas_pos: Vector2, p
 	for each in path.slice(1):
 		MAP.set_cell(vis_layer_id, each, img_src_id, atlas_pos)
 
+func is_at_valid_map_tile(layer: int, scene_coords: Vector2) -> bool:
+	return MAP.get_used_cells(layer).find(MAP.local_to_map(scene_coords)) != -1
+
+func expose_map_coord(scene_coords: Vector2) -> Vector2i:
+	return MAP.local_to_map(scene_coords)
+
 # Build astar map with added unit locations as obstacles
 func build_astar_map(layer: int) -> void:
 	# Get all non-null unit positions on map
 	ASTAR.build_astar_map(MAP, layer)
 
 # Get path to point
-func get_astar_path(from: Vector2i, to: Vector2i) -> PackedVector2Array:
-	return ASTAR.get_astar_path(from, to)
+func get_astar_path(from: Vector2, to: Vector2) -> PackedVector2Array:
+	return ASTAR.get_astar_path(MAP.local_to_map(from), MAP.local_to_map(to))
 
 func set_point_disabled(new_pos: Vector2, is_disabled: bool) -> void:
 	ASTAR.set_point_disabled(MAP.local_to_map(new_pos), is_disabled) # Disable new position
