@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://qwnn0f7bbkxn"]
+[gd_scene load_steps=41 format=3 uid="uid://qwnn0f7bbkxn"]
 
 [ext_resource type="Texture2D" uid="uid://bpiomleg6q6cq" path="res://assets/IsoTileMap.png" id="1_28q0j"]
 [ext_resource type="Script" path="res://scripts/GameService.gd" id="1_he3ci"]
@@ -80,6 +80,10 @@ region = Rect2(8, 8, 32, 32)
 atlas = ExtResource("9_klear")
 region = Rect2(0, 48, 48, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_6uv68"]
+atlas = ExtResource("9_klear")
+region = Rect2(8, 8, 32, 32)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2mr7d"]
 texture = ExtResource("1_28q0j")
 texture_region_size = Vector2i(80, 80)
@@ -120,7 +124,7 @@ script = ExtResource("7_s1tf4")
 clip_contents = true
 offset_left = -576.0
 offset_top = -76.0
-offset_right = -302.0
+offset_right = -145.0
 offset_bottom = 124.0
 scale = Vector2(2, 2)
 script = ExtResource("7_4s5bv")
@@ -338,15 +342,15 @@ text = "Skip"
 [node name="ActionSelection" type="Control" parent="CombatCamera/UI"]
 visible = false
 clip_contents = true
-custom_minimum_size = Vector2(200, 200)
+custom_minimum_size = Vector2(120, 200)
 layout_mode = 2
 
 [node name="SelectionTexture" type="NinePatchRect" parent="CombatCamera/UI/ActionSelection"]
 layout_mode = 0
 offset_left = 3.0
-offset_top = 122.0
-offset_right = 133.0
-offset_bottom = 200.0
+offset_top = 101.0
+offset_right = 114.0
+offset_bottom = 201.0
 texture = SubResource("AtlasTexture_mixf0")
 patch_margin_left = 10
 patch_margin_top = 10
@@ -356,10 +360,10 @@ patch_margin_bottom = 10
 [node name="SelectionLabel" type="NinePatchRect" parent="CombatCamera/UI/ActionSelection"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.0745
-anchor_top = 0.57
-anchor_right = 0.3295
-anchor_bottom = 0.57
+anchor_left = 0.0991667
+anchor_top = 0.465
+anchor_right = 0.4825
+anchor_bottom = 0.465
 offset_left = 0.1
 offset_right = 48.1
 offset_bottom = 16.0
@@ -376,9 +380,9 @@ anchor_left = 0.062
 anchor_top = 0.13
 anchor_right = 0.062
 anchor_bottom = 0.13
-offset_left = -0.138
+offset_left = 0.172
 offset_top = -2.08
-offset_right = 85.862
+offset_right = 82.172
 offset_bottom = 13.92
 theme_override_font_sizes/font_size = 11
 text = "Choose Action"
@@ -388,17 +392,18 @@ text_overrun_behavior = 3
 
 [node name="Options" type="VBoxContainer" parent="CombatCamera/UI/ActionSelection"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -75.5
-offset_top = -65.0
-offset_right = 4.5
-offset_bottom = -9.0
+anchors_preset = -1
+anchor_left = 0.146
+anchor_top = 0.465
+anchor_right = 0.146
+anchor_bottom = 0.565
+offset_left = -0.0199986
+offset_top = 20.0
+offset_right = 79.98
+offset_bottom = 76.0
 grow_horizontal = 2
 grow_vertical = 0
+metadata/_edit_use_anchors_ = true
 
 [node name="Attack" parent="CombatCamera/UI/ActionSelection/Options" instance=ExtResource("15_ltxxa")]
 layout_mode = 2
@@ -414,6 +419,46 @@ text = "Special"
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 text = "Potion"
+
+[node name="Back" parent="CombatCamera/UI/ActionSelection/Options" instance=ExtResource("15_ltxxa")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Back
+"
+
+[node name="BackMenu" type="Control" parent="CombatCamera/UI"]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(120, 200)
+layout_mode = 2
+
+[node name="BackTexture" type="NinePatchRect" parent="CombatCamera/UI/BackMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.85
+anchor_right = 0.758
+anchor_bottom = 1.0
+offset_right = 0.0400009
+texture = SubResource("AtlasTexture_6uv68")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="Back" parent="CombatCamera/UI/BackMenu" instance=ExtResource("15_ltxxa")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.067
+anchor_top = 0.877
+anchor_right = 0.692
+anchor_bottom = 0.957
+offset_left = -0.04
+offset_top = 0.0999908
+offset_right = -0.0400009
+offset_bottom = 0.0999908
+theme_override_font_sizes/font_size = 11
+text = "Back
+"
 
 [node name="DebugLabel" type="Label" parent="CombatCamera"]
 offset_left = -538.0
@@ -553,7 +598,7 @@ texture = ExtResource("22_4dwnm")
 
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -1
-position = Vector2(536, 395)
+position = Vector2(469, 412)
 scale = Vector2(2, 2)
 texture = ExtResource("3_sox54")
 
@@ -564,3 +609,5 @@ texture = ExtResource("3_sox54")
 [connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Action" to="." method="_on_action_button_down"]
 [connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Skip" to="." method="_player_skip_turn"]
 [connection signal="button_down" from="CombatCamera/UI/ActionSelection/Options/Attack" to="." method="_on_attack_button_down"]
+[connection signal="button_down" from="CombatCamera/UI/ActionSelection/Options/Back" to="." method="_on_action_selection_back"]
+[connection signal="button_down" from="CombatCamera/UI/BackMenu/Back" to="." method="_on_back_button"]
