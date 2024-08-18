@@ -132,5 +132,12 @@ func _on_move_button_down():
 func _on_action_button_down():
 	var timer = get_tree().create_timer(0.2)
 	await timer.timeout
+	UI.focus_selection_menu()
+
+func _on_attack_button_down():
+	var timer = get_tree().create_timer(0.2)
+	await timer.timeout
 	attack_action = true
+	UI.hide_selection_menu()
 	NAV_SERVICE.show_planned_path(1, 1, Vector2(0, 0), NAV_SERVICE.get_map_cells_in_range(active.position, active.current_atk_range))
+	

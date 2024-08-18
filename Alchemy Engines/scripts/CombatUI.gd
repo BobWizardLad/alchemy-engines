@@ -1,6 +1,7 @@
 extends Control
 
 @onready var ACTIONS_MENU: Control = $ActionsMenu
+@onready var SELECTION_MENU: Control = $ActionSelection
 
 @onready var unit_name_label: Label = $Stats/NameTexture/UnitName
 @onready var unit_armor_bar: TextureProgressBar = $Stats/ArmorBar
@@ -33,6 +34,10 @@ func hide_actions_menu() -> void:
 func hide_UI_menu() -> void:
 	visible = false
 
+# Hide the action selection menu
+func hide_selection_menu() -> void:
+	SELECTION_MENU.visible = false
+
 # Tween the Actions Menu into frame
 func focus_actions_menu() -> void:
 	ACTIONS_MENU.visible = true
@@ -40,6 +45,10 @@ func focus_actions_menu() -> void:
 # Tween the UI into frame
 func focus_UI_menu() -> void:
 	visible = true
+
+# Show the action selection menu
+func focus_selection_menu() -> void:
+	SELECTION_MENU.visible = true
 
 func _on_combat_camera_camera_move_finished():
 	pass # Replace with function body.

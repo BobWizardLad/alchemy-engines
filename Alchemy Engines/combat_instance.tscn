@@ -9,9 +9,7 @@
 [ext_resource type="Script" path="res://scripts/NavService.gd" id="6_ywr2q"]
 [ext_resource type="PackedScene" uid="uid://wxvjnpow12ky" path="res://Pawn.tscn" id="7_4cdsd"]
 [ext_resource type="Script" path="res://scripts/CombatUI.gd" id="7_4s5bv"]
-[ext_resource type="Texture2D" uid="uid://c3qixv0nfoqjs" path="res://assets/combat_ui_lower.png" id="7_ro586"]
 [ext_resource type="Script" path="res://scripts/CombatCamera.gd" id="7_s1tf4"]
-[ext_resource type="Texture2D" uid="uid://d1cxohf4qaco8" path="res://assets/combat_ui_upper.png" id="8_o73a7"]
 [ext_resource type="Texture2D" uid="uid://bqdvtef40r7ky" path="res://assets/UI.png" id="9_klear"]
 [ext_resource type="Texture2D" uid="uid://c8em6lxls3rs8" path="res://assets/ProtagHelpIdle.png" id="13_d3se6"]
 [ext_resource type="Script" path="res://scripts/PawnService.gd" id="14_s53s0"]
@@ -73,6 +71,14 @@ region = Rect2(112, 32, 48, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_e63rf"]
 atlas = ExtResource("9_klear")
 region = Rect2(8, 8, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mixf0"]
+atlas = ExtResource("9_klear")
+region = Rect2(8, 8, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eh0dn"]
+atlas = ExtResource("9_klear")
+region = Rect2(0, 48, 48, 16)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2mr7d"]
 texture = ExtResource("1_28q0j")
@@ -244,6 +250,7 @@ texture_progress = SubResource("AtlasTexture_uptsw")
 metadata/_edit_use_anchors_ = true
 
 [node name="ActionsMenu" type="Control" parent="CombatCamera/UI"]
+visible = false
 custom_minimum_size = Vector2(120, 200)
 layout_mode = 2
 
@@ -328,56 +335,85 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 11
 text = "Skip"
 
-[node name="ActionContextMenu" type="Control" parent="CombatCamera/UI"]
+[node name="ActionSelection" type="Control" parent="CombatCamera/UI"]
 visible = false
 clip_contents = true
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 
-[node name="ActionsLower" type="TextureRect" parent="CombatCamera/UI/ActionContextMenu"]
-modulate = Color(1, 1, 1, 0.223529)
+[node name="SelectionTexture" type="NinePatchRect" parent="CombatCamera/UI/ActionSelection"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("7_ro586")
+offset_left = 3.0
+offset_top = 122.0
+offset_right = 133.0
+offset_bottom = 200.0
+texture = SubResource("AtlasTexture_mixf0")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
 
-[node name="ActionsUpper" type="TextureRect" parent="CombatCamera/UI/ActionContextMenu"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("8_o73a7")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CombatCamera/UI/ActionContextMenu"]
+[node name="SelectionLabel" type="NinePatchRect" parent="CombatCamera/UI/ActionSelection"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = -1
+anchor_left = 0.0745
+anchor_top = 0.57
+anchor_right = 0.3295
+anchor_bottom = 0.57
+offset_left = 0.1
+offset_right = 48.1
+offset_bottom = 16.0
+texture = SubResource("AtlasTexture_eh0dn")
+patch_margin_left = 20
+patch_margin_right = 20
+axis_stretch_horizontal = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CombatCamera/UI/ActionSelection/SelectionLabel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.062
+anchor_top = 0.13
+anchor_right = 0.062
+anchor_bottom = 0.13
+offset_left = -0.138
+offset_top = -2.08
+offset_right = 85.862
+offset_bottom = 13.92
+theme_override_font_sizes/font_size = 11
+text = "Choose Action"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Options" type="VBoxContainer" parent="CombatCamera/UI/ActionSelection"]
+layout_mode = 1
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+anchor_bottom = 1.0
+offset_left = -75.5
+offset_top = -65.0
+offset_right = 4.5
+offset_bottom = -9.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 
-[node name="Attack" type="Button" parent="CombatCamera/UI/ActionContextMenu/VBoxContainer"]
+[node name="Attack" parent="CombatCamera/UI/ActionSelection/Options" instance=ExtResource("15_ltxxa")]
 layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_font_sizes/font_size = 30
-text = " * Attack"
+theme_override_font_sizes/font_size = 11
+text = "Attack"
 
-[node name="Special" type="Button" parent="CombatCamera/UI/ActionContextMenu/VBoxContainer"]
+[node name="Special" parent="CombatCamera/UI/ActionSelection/Options" instance=ExtResource("15_ltxxa")]
 layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_font_sizes/font_size = 30
-text = " * Special"
+theme_override_font_sizes/font_size = 11
+text = "Special"
 
-[node name="Potion" type="Button" parent="CombatCamera/UI/ActionContextMenu/VBoxContainer"]
+[node name="Potion" parent="CombatCamera/UI/ActionSelection/Options" instance=ExtResource("15_ltxxa")]
 layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_font_sizes/font_size = 30
-text = " * Potion"
+theme_override_font_sizes/font_size = 11
+text = "Potion"
 
 [node name="DebugLabel" type="Label" parent="CombatCamera"]
 offset_left = -538.0
@@ -527,3 +563,4 @@ texture = ExtResource("3_sox54")
 [connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Move" to="." method="_on_move_button_down"]
 [connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Action" to="." method="_on_action_button_down"]
 [connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Skip" to="." method="_player_skip_turn"]
+[connection signal="button_down" from="CombatCamera/UI/ActionSelection/Options/Attack" to="." method="_on_attack_button_down"]
