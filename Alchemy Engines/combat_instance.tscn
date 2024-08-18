@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://qwnn0f7bbkxn"]
+[gd_scene load_steps=40 format=3 uid="uid://qwnn0f7bbkxn"]
 
 [ext_resource type="Texture2D" uid="uid://bpiomleg6q6cq" path="res://assets/IsoTileMap.png" id="1_28q0j"]
 [ext_resource type="Script" path="res://scripts/GameService.gd" id="1_he3ci"]
@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://c3qixv0nfoqjs" path="res://assets/combat_ui_lower.png" id="7_ro586"]
 [ext_resource type="Script" path="res://scripts/CombatCamera.gd" id="7_s1tf4"]
 [ext_resource type="Texture2D" uid="uid://d1cxohf4qaco8" path="res://assets/combat_ui_upper.png" id="8_o73a7"]
-[ext_resource type="Texture2D" uid="uid://cxaqvc8efeugn" path="res://assets/ProtagBiggIdle.png" id="9_6jath"]
 [ext_resource type="Texture2D" uid="uid://bqdvtef40r7ky" path="res://assets/UI.png" id="9_klear"]
 [ext_resource type="Texture2D" uid="uid://c8em6lxls3rs8" path="res://assets/ProtagHelpIdle.png" id="13_d3se6"]
 [ext_resource type="Script" path="res://scripts/PawnService.gd" id="14_s53s0"]
@@ -21,7 +20,10 @@
 [ext_resource type="Script" path="res://EnemyController.gd" id="16_815gm"]
 [ext_resource type="Texture2D" uid="uid://d11bxix1xlrwg" path="res://assets/AntagRuntIdle.png" id="18_g5f8e"]
 [ext_resource type="Texture2D" uid="uid://cohlo657xmdi3" path="res://assets/AntagFattIdle.png" id="19_s44jy"]
+[ext_resource type="Texture2D" uid="uid://bialgqteie5jq" path="res://assets/AntagShotAtk.png" id="20_i5kpb"]
 [ext_resource type="Texture2D" uid="uid://bo3hun4xla4ic" path="res://assets/AntagShotIdle.png" id="20_ocr5m"]
+[ext_resource type="Texture2D" uid="uid://cbrra3e4cqhlc" path="res://assets/AntagRuntAtk.png" id="21_6bk38"]
+[ext_resource type="Texture2D" uid="uid://dt2nnnduga7c8" path="res://assets/AntagFattAtk.png" id="21_yeor5"]
 [ext_resource type="Texture2D" uid="uid://xdw0gn0xh7q6" path="res://assets/cardboard.png" id="22_4dwnm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ebj7c"]
@@ -412,18 +414,30 @@ script = ExtResource("16_815gm")
 [node name="FastEnmy" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
 position = Vector2(761, 702)
 texture = ExtResource("18_g5f8e")
+idle_frames = ExtResource("18_g5f8e")
+attack_frames = ExtResource("21_6bk38")
+unit_type = 1
 
 [node name="FastEnmy2" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
 position = Vector2(561, 761)
 texture = ExtResource("18_g5f8e")
+idle_frames = ExtResource("18_g5f8e")
+attack_frames = ExtResource("21_6bk38")
+unit_type = 1
 
 [node name="ShotEnmy" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
 position = Vector2(158, 641)
 texture = ExtResource("20_ocr5m")
+idle_frames = ExtResource("20_ocr5m")
+attack_frames = ExtResource("20_i5kpb")
+unit_type = 5
 
 [node name="FatEnmy" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
 position = Vector2(519, 621)
 texture = ExtResource("19_s44jy")
+idle_frames = ExtResource("19_s44jy")
+attack_frames = ExtResource("21_yeor5")
+unit_type = 3
 
 [node name="PlayerController" type="Node2D" parent="PawnService"]
 y_sort_enabled = true
@@ -432,8 +446,13 @@ script = ExtResource("6_e71m8")
 [node name="Player" parent="PawnService/PlayerController" groups=["Allies"] instance=ExtResource("7_4cdsd")]
 position = Vector2(41, -18)
 scale = Vector2(1.10938, 1)
-texture = ExtResource("9_6jath")
-pawn_name = "Bertha"
+texture = ExtResource("19_s44jy")
+idle_frames = ExtResource("20_ocr5m")
+attack_frames = ExtResource("20_i5kpb")
+pawn_name = "Kevin"
+unit_type = 1
+DAMAGE = 20
+SPECIAL_DAMAGE = 35
 
 [node name="NeutralMobsController" type="Node2D" parent="PawnService"]
 y_sort_enabled = true

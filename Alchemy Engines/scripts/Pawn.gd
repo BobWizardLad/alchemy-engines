@@ -3,7 +3,10 @@ class_name Pawn
 
 @onready var ANIMATION_PLAYER: AnimationPlayer = $AnimationPlayer
 
-@export var pawn_name: String
+@export var idle_frames: CompressedTexture2D # Idle animation frames
+@export var attack_frames: CompressedTexture2D # Attack animation frames
+
+@export var pawn_name: String # Unit name in game
 @export var unit_type: Class # The chassis the unit is using
 @export var HEALTH_MAX: float # Persistent health
 @export var ARMOR_MAX: float # Per-combat temp health
@@ -12,7 +15,8 @@ class_name Pawn
 @export var SPECIAL_DAMAGE: int # potions and chassis move potency
 @export var INITIATIVE: float # Unit turn priority
 @export var MOVE: int # Unit max tiles travel per turn
-@export var ATK_RANGE: int
+@export var ATK_RANGE: int # Unit max tile distance to attack
+
 @export var will_animate: bool = true # Turn off animations for dummies, etc
 
 var motion_tween: Tween
@@ -40,8 +44,16 @@ func _ready():
 	current_move = MOVE
 	current_atk_range = ATK_RANGE
 	ANIMATION_PLAYER.get_animation("idle").loop_mode = Animation.LOOP_LINEAR
-	get_tree().create_timer(randi_range(0, 3)).connect("timeout", start_idle_anim)
+	get_tree().create_timer(randi_range(0, 1.5)).connect("timeout", start_idle_anim)
 
 func start_idle_anim():
 	if will_animate:
+		vframes = 2
+		texture = idle_frames
 		ANIMATION_PLAYER.play("idle")
+
+func start_atk_anim():
+	if will_animate:
+		vframes = 2
+		texture = attack_frames
+		ANIMATION_PLAYER.play("attack")

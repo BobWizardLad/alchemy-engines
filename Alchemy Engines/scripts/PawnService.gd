@@ -27,6 +27,8 @@ func snap_units(map: TileMap):
 		each.position = map.map_to_local(map.local_to_map(each.position))
 
 func pawn_attack(attacker: Pawn, target: Pawn):
+	attacker.start_atk_anim()
+	await attacker.ANIMATION_PLAYER.animation_finished
 	if target.current_armor > 0:
 		target.current_armor -= attacker.current_damage * (1.0 - target.current_resistance)
 		if target.current_armor < 0:
@@ -34,6 +36,7 @@ func pawn_attack(attacker: Pawn, target: Pawn):
 			target.current_armor = 0
 	elif target.current_armor <= 0:
 		target.current_health -= attacker.current_damage * (1.0 - target.current_resistance)
+	attacker.start_idle_anim()
 	emit_signal("attack_step_finished")
 
 # path is a list of points handed to the move command.
