@@ -28,7 +28,7 @@ func _ready():
 	attack_action = false
 	is_attack_step = false
 	
-	TURN_SERVICE.populate_initiative(PAWN_SERVICE.get_all_units())
+	TURN_SERVICE.populate_initiative(PAWN_SERVICE.get_player_units())
 	PAWN_SERVICE.snap_units(NAV_SERVICE.MAP)
 	NAV_SERVICE.build_astar_map(0)
 	for each in PAWN_SERVICE.get_all_units():
@@ -37,30 +37,34 @@ func _ready():
 	_on_new_turn()
 
 func _process(_delta) -> void:
-	display_debug_label(str(NAV_SERVICE.MAP.local_to_map(get_global_mouse_position())))
-	
-	if not is_player_turn || move_action || attack_action:
-		UI.hide_actions_menu()
-	elif is_player_turn && not move_action && not attack_action:
-		UI.focus_actions_menu()
+	display_debug_label(str(NAV_SERVICE.expose_map_coord(get_global_mouse_position())))
 
 func _input(event):
+	# -----------------------  UI/QoL Inputs -----------------------------------
+	# - TODO - Implement full keyboard UI and map controls
+	
+	# -----------------------  Unit-Centric Inputs ------------------------------
 	if move_action:
-		if event is InputEventMouseButton and NAV_SERVICE.MAP.get_used_cells(0).find(NAV_SERVICE.MAP.local_to_map(get_local_mouse_position())) != -1:
+		if event is InputEventMouseButton and NAV_SERVICE.is_at_valid_map_tile(0, get_global_mouse_position()):
 			if not is_move_step:
 				# Call to wipe planned path visible
 				NAV_SERVICE.clear_selection_layer()
 				# Set the pawn's pre-move position to enabled point
 				NAV_SERVICE.set_point_disabled(active.position, false)
-				var path = NAV_SERVICE.ASTAR.get_astar_path(NAV_SERVICE.MAP.local_to_map(active.position), NAV_SERVICE.MAP.local_to_map(get_local_mouse_position()))
+				var path = NAV_SERVICE.get_astar_path(active.position, get_local_mouse_position())
 				# Disable player input and call a pawn move
 				is_move_step = true
+				UI.hide_back_menu()
 				PAWN_SERVICE.pawn_move(NAV_SERVICE.MAP, path, active)
 	if attack_action:
+		if event is InputEventMouseMotion and not is_attack_step:
+			if get_cursor_hovering_unit(PAWN_SERVICE, NAV_SERVICE.MAP) != null:
+				NAV_SERVICE.focus_tile(get_cursor_hovering_unit(PAWN_SERVICE, NAV_SERVICE.MAP).position) # - TODO - nonfunctional focus_tile
 		if event is InputEventMouseButton and not is_attack_step:
 			if get_cursor_hovering_unit(PAWN_SERVICE, NAV_SERVICE.MAP) != null:
 				NAV_SERVICE.clear_selection_layer()
 				is_attack_step = true
+				UI.hide_back_menu()
 				PAWN_SERVICE.pawn_attack(active, get_cursor_hovering_unit(PAWN_SERVICE, NAV_SERVICE.MAP))
 
 # Function to calculate most valuable turn for any unit
@@ -69,7 +73,7 @@ func _input(event):
 # [A] the most valuable path a unit should take,
 # [B] the unit that shouldbe attacked if any,
 # [C] the move that should be used
-func calculate_turn(current_unit: Pawn, astar: AStar2D, map: TileMap, current_units: Array[Node]) -> Array:
+func calculate_turn(current_unit: Pawn, astar: AStar2D, map: TileMap, current_units: Array[Node]) -> Array: # - TODO - Map overhaul
 	var best_path: PackedVector2Array
 	var target: Node2D
 	var actions: PawnService.Action
@@ -83,7 +87,7 @@ func calculate_turn(current_unit: Pawn, astar: AStar2D, map: TileMap, current_un
 
 # Checks the position of all units to see if they are under the cursor.
 # Returns the pawn under the cursor if ther is one, returns null if one is not there
-func get_cursor_hovering_unit(pawn_service: PawnService, map: TileMap) -> Pawn:
+func get_cursor_hovering_unit(pawn_service: PawnService, map: TileMap) -> Pawn: # - TODO - Map overhaul
 	for each in PAWN_SERVICE.get_all_units():
 		if each.position == map.map_to_local(map.local_to_map(get_local_mouse_position())):
 			return each
@@ -109,8 +113,9 @@ func _on_new_turn():
 	active = TURN_SERVICE.get_current_turn_pawn()
 	UI.update_current_unit(active)
 	CAMERA.focus_next_unit(active)
+	UI.focus_actions_menu()
 
-func _on_combat_camera_camera_move_finished():
+func _on_combat_camera_camera_move_finished(): # - TODO - Map overhaul
 	if TURN_SERVICE.get_current_turn_pawn().is_in_group("Allies"):
 		pass
 	elif TURN_SERVICE.get_current_turn_pawn().is_in_group("Enemies"):
@@ -123,11 +128,41 @@ func display_debug_label(msg: String) -> void:
 func _on_move_button_down():
 	var timer = get_tree().create_timer(0.2)
 	await timer.timeout
+	UI.hide_actions_menu()
+	UI.focus_back_menu()
 	move_action = true
-	NAV_SERVICE.show_planned_path(1, 1, Vector2(0, 0), NAV_SERVICE.get_cells_in_range(active.position, active.current_move))
+	NAV_SERVICE.show_planned_path(1, 1, Vector2(0, 0), NAV_SERVICE.get_map_cells_in_range(active.position, active.current_move))
 
 func _on_action_button_down():
 	var timer = get_tree().create_timer(0.2)
 	await timer.timeout
+	UI.hide_actions_menu()
+	UI.focus_selection_menu()
+
+func _on_attack_button_down():
+	var timer = get_tree().create_timer(0.2)
+	await timer.timeout
 	attack_action = true
-	NAV_SERVICE.show_planned_path(1, 1, Vector2(0, 0), NAV_SERVICE.get_cells_in_range(active.position, active.current_atk_range))
+	UI.hide_selection_menu()
+	UI.focus_back_menu()
+	NAV_SERVICE.show_planned_path(1, 1, Vector2(0, 0), NAV_SERVICE.get_map_cells_in_range(active.position, active.current_atk_range))
+	
+func _on_action_selection_back():
+	var timer = get_tree().create_timer(0.2)
+	await timer.timeout
+	UI.hide_selection_menu()
+	UI.focus_actions_menu()
+
+func _on_back_button():
+	if move_action:
+		# Call to wipe planned path visible
+		NAV_SERVICE.clear_selection_layer()
+		move_action = false
+		UI.focus_actions_menu()
+		UI.hide_back_menu()
+	if attack_action:
+		# Call to wipe planned path visible
+		NAV_SERVICE.clear_selection_layer()
+		attack_action = false
+		UI.focus_selection_menu()
+		UI.hide_back_menu()

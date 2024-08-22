@@ -1,7 +1,46 @@
-[gd_scene load_steps=3 format=3 uid="uid://wxvjnpow12ky"]
+[gd_scene load_steps=6 format=3 uid="uid://wxvjnpow12ky"]
 
 [ext_resource type="Texture2D" uid="uid://c86pymncn7od5" path="res://assets/ProtagFastIdle.png" id="1_2p0gm"]
 [ext_resource type="Script" path="res://scripts/Pawn.gd" id="2_kywyg"]
+
+[sub_resource type="Animation" id="Animation_ienf6"]
+resource_name = "idle"
+length = 1.90001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_famnc"]
+resource_name = "attack"
+length = 1.9
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vuvpm"]
+_data = {
+"attack": SubResource("Animation_famnc"),
+"idle": SubResource("Animation_ienf6")
+}
 
 [node name="Player" type="Sprite2D"]
 z_index = 1
@@ -10,6 +49,7 @@ texture = ExtResource("1_2p0gm")
 offset = Vector2(0, -32)
 hframes = 5
 vframes = 2
+frame = 9
 script = ExtResource("2_kywyg")
 HEALTH_MAX = 24.0
 ARMOR_MAX = 10.0
@@ -18,3 +58,8 @@ SPECIAL_DAMAGE = 25
 INITIATIVE = 4.0
 MOVE = 6
 ATK_RANGE = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vuvpm")
+}

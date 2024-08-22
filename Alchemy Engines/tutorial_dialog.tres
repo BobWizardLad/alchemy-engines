@@ -1,0 +1,15 @@
+[gd_resource type="JSON" format=3 uid="uid://cnxn2xqk6xn83"]
+
+[resource]
+data = {
+"arrive_dummy_turn": ["~Ok, that's the surprise over there!~", "~...~", "~..~", "~Convincing, no? Almost looks like the real thing!~", "~Real or no, I want you to fire on it with the main gun of your engine.~", "~Use the control panel again, and click on that guy.~"],
+"delay_dummy": ["~Rookie, you're worrying me.~", "~Dig deep and find the surprise, you can't miss it.~", "~Use the control panel on the left and click where you want the engine to go, preferrably towards the target...~"],
+"exasperation": ["~As much fun as I'm having watching you do doughnuts in that thing-~", "~CUT IT OUT AND GET ON MISSION!~", "~Use the control panel on the left and click where you want the engine to go, preferrably towards the target...~"],
+"exfil_turn": ["~Good work commander interim, we may not all die after all.~", "~I'll see you back home! We'll open my personal shine potion stash to celebrate, it makes a pretty nice cocktail~", "~Minister Grey signing off.~"],
+"find_enemies": ["~Ok, the joke's on me now.~", "~Those are very real! Let's train with those potions on our new volunteers!~", "~These potions are very valuable, as fuel for not only your engine but the whole city back home~", "~You go throwing this stuff willy-nilly, you'll run out! That means no alchemy engines, and that means no home!~", "~I have a stockpile set aside for training, so don't worry about it for this skirmish.~", "~Select the potion option in your actions menu, and use the cursor to select a target! Aim right in the center, it'll splash out quite a bit!~"],
+"post_dummy": ["~Ok, good job.~", "~This will be your bread and butter move for damaging enemies.~", "~Head over to the next target for potion training.~"],
+"post_shine_turn": ["~Great! Finish it off!~"],
+"shadowstep_turn": ["~The sun is coming down, they're jumping around, this is bad!~", "~Don't let him outflank you! Throw a shine potion at that shadow to lock that straggler down. That's the yellow one!~"],
+"turn_01": ["~Good morning commander interim.~", "~This is defense council minister Grey.~", "~We will being your training now!~", "~This is an alchemy engine, the machines we drive to fight the shadow beasts~", "~Your job will be issuing commands to them to successfully clear the way for home base to move through the area.~", "~Use the control panel in the bottom left and select the tile you fancy to move your unit east along the riverbed, there's a suprise for you out here.~"],
+"turn_02": ["~I love the smell of potion fumes, dust, and nature on the road, reminds me of when I was young~", "~The alchemists brewed that batch yesterday, the one your engine is burning that is.~", "~We did the hard work and fueled this one for you, but you'll be deciding that stuff in the future.~", "~The potions these things burn will influence how they fight and how they move, so it'll be important.~", "~It's all very mystical to me, never understood much of how it works myself.~", "~Mostly knew how to burn it, HA!~"]
+}

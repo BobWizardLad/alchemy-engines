@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://qwnn0f7bbkxn"]
+[gd_scene load_steps=41 format=3 uid="uid://qwnn0f7bbkxn"]
 
 [ext_resource type="Texture2D" uid="uid://bpiomleg6q6cq" path="res://assets/IsoTileMap.png" id="1_28q0j"]
 [ext_resource type="Script" path="res://scripts/GameService.gd" id="1_he3ci"]
@@ -9,10 +9,7 @@
 [ext_resource type="Script" path="res://scripts/NavService.gd" id="6_ywr2q"]
 [ext_resource type="PackedScene" uid="uid://wxvjnpow12ky" path="res://Pawn.tscn" id="7_4cdsd"]
 [ext_resource type="Script" path="res://scripts/CombatUI.gd" id="7_4s5bv"]
-[ext_resource type="Texture2D" uid="uid://c3qixv0nfoqjs" path="res://assets/combat_ui_lower.png" id="7_ro586"]
 [ext_resource type="Script" path="res://scripts/CombatCamera.gd" id="7_s1tf4"]
-[ext_resource type="Texture2D" uid="uid://d1cxohf4qaco8" path="res://assets/combat_ui_upper.png" id="8_o73a7"]
-[ext_resource type="Texture2D" uid="uid://cxaqvc8efeugn" path="res://assets/ProtagBiggIdle.png" id="9_6jath"]
 [ext_resource type="Texture2D" uid="uid://bqdvtef40r7ky" path="res://assets/UI.png" id="9_klear"]
 [ext_resource type="Texture2D" uid="uid://c8em6lxls3rs8" path="res://assets/ProtagHelpIdle.png" id="13_d3se6"]
 [ext_resource type="Script" path="res://scripts/PawnService.gd" id="14_s53s0"]
@@ -21,7 +18,11 @@
 [ext_resource type="Script" path="res://EnemyController.gd" id="16_815gm"]
 [ext_resource type="Texture2D" uid="uid://d11bxix1xlrwg" path="res://assets/AntagRuntIdle.png" id="18_g5f8e"]
 [ext_resource type="Texture2D" uid="uid://cohlo657xmdi3" path="res://assets/AntagFattIdle.png" id="19_s44jy"]
+[ext_resource type="Texture2D" uid="uid://bialgqteie5jq" path="res://assets/AntagShotAtk.png" id="20_i5kpb"]
 [ext_resource type="Texture2D" uid="uid://bo3hun4xla4ic" path="res://assets/AntagShotIdle.png" id="20_ocr5m"]
+[ext_resource type="Texture2D" uid="uid://cbrra3e4cqhlc" path="res://assets/AntagRuntAtk.png" id="21_6bk38"]
+[ext_resource type="Texture2D" uid="uid://dt2nnnduga7c8" path="res://assets/AntagFattAtk.png" id="21_yeor5"]
+[ext_resource type="Texture2D" uid="uid://xdw0gn0xh7q6" path="res://assets/cardboard.png" id="22_4dwnm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ebj7c"]
 atlas = ExtResource("9_klear")
@@ -71,6 +72,18 @@ region = Rect2(112, 32, 48, 16)
 atlas = ExtResource("9_klear")
 region = Rect2(8, 8, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_mixf0"]
+atlas = ExtResource("9_klear")
+region = Rect2(8, 8, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eh0dn"]
+atlas = ExtResource("9_klear")
+region = Rect2(0, 48, 48, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6uv68"]
+atlas = ExtResource("9_klear")
+region = Rect2(8, 8, 32, 32)
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2mr7d"]
 texture = ExtResource("1_28q0j")
 texture_region_size = Vector2i(80, 80)
@@ -99,12 +112,6 @@ sources/1 = SubResource("TileSetAtlasSource_2mr7d")
 y_sort_enabled = true
 script = ExtResource("1_he3ci")
 
-[node name="Background" type="Sprite2D" parent="."]
-z_index = -1
-position = Vector2(545, 393)
-scale = Vector2(2, 2)
-texture = ExtResource("3_sox54")
-
 [node name="TurnService" type="Node2D" parent="."]
 script = ExtResource("2_eknaf")
 
@@ -117,7 +124,7 @@ script = ExtResource("7_s1tf4")
 clip_contents = true
 offset_left = -576.0
 offset_top = -76.0
-offset_right = -302.0
+offset_right = -145.0
 offset_bottom = 124.0
 scale = Vector2(2, 2)
 script = ExtResource("7_4s5bv")
@@ -247,6 +254,7 @@ texture_progress = SubResource("AtlasTexture_uptsw")
 metadata/_edit_use_anchors_ = true
 
 [node name="ActionsMenu" type="Control" parent="CombatCamera/UI"]
+visible = false
 custom_minimum_size = Vector2(120, 200)
 layout_mode = 2
 
@@ -331,56 +339,126 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 11
 text = "Skip"
 
-[node name="ActionContextMenu" type="Control" parent="CombatCamera/UI"]
+[node name="ActionSelection" type="Control" parent="CombatCamera/UI"]
 visible = false
 clip_contents = true
-custom_minimum_size = Vector2(200, 200)
+custom_minimum_size = Vector2(120, 200)
 layout_mode = 2
 
-[node name="ActionsLower" type="TextureRect" parent="CombatCamera/UI/ActionContextMenu"]
-modulate = Color(1, 1, 1, 0.223529)
+[node name="SelectionTexture" type="NinePatchRect" parent="CombatCamera/UI/ActionSelection"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("7_ro586")
+offset_left = 3.0
+offset_top = 101.0
+offset_right = 114.0
+offset_bottom = 201.0
+texture = SubResource("AtlasTexture_mixf0")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
 
-[node name="ActionsUpper" type="TextureRect" parent="CombatCamera/UI/ActionContextMenu"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("8_o73a7")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CombatCamera/UI/ActionContextMenu"]
+[node name="SelectionLabel" type="NinePatchRect" parent="CombatCamera/UI/ActionSelection"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+anchors_preset = -1
+anchor_left = 0.0991667
+anchor_top = 0.465
+anchor_right = 0.4825
+anchor_bottom = 0.465
+offset_left = 0.1
+offset_right = 48.1
+offset_bottom = 16.0
+texture = SubResource("AtlasTexture_eh0dn")
+patch_margin_left = 20
+patch_margin_right = 20
+axis_stretch_horizontal = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CombatCamera/UI/ActionSelection/SelectionLabel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.062
+anchor_top = 0.13
+anchor_right = 0.062
+anchor_bottom = 0.13
+offset_left = 0.172
+offset_top = -2.08
+offset_right = 82.172
+offset_bottom = 13.92
+theme_override_font_sizes/font_size = 11
+text = "Choose Action"
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Options" type="VBoxContainer" parent="CombatCamera/UI/ActionSelection"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.146
+anchor_top = 0.465
+anchor_right = 0.146
+anchor_bottom = 0.565
+offset_left = -0.0199986
+offset_top = 20.0
+offset_right = 79.98
+offset_bottom = 76.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
 
-[node name="Attack" type="Button" parent="CombatCamera/UI/ActionContextMenu/VBoxContainer"]
+[node name="Attack" parent="CombatCamera/UI/ActionSelection/Options" instance=ExtResource("15_ltxxa")]
 layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_font_sizes/font_size = 30
-text = " * Attack"
+theme_override_font_sizes/font_size = 11
+text = "Attack"
 
-[node name="Special" type="Button" parent="CombatCamera/UI/ActionContextMenu/VBoxContainer"]
+[node name="Special" parent="CombatCamera/UI/ActionSelection/Options" instance=ExtResource("15_ltxxa")]
 layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_font_sizes/font_size = 30
-text = " * Special"
+theme_override_font_sizes/font_size = 11
+text = "Special"
 
-[node name="Potion" type="Button" parent="CombatCamera/UI/ActionContextMenu/VBoxContainer"]
+[node name="Potion" parent="CombatCamera/UI/ActionSelection/Options" instance=ExtResource("15_ltxxa")]
 layout_mode = 2
-theme_type_variation = &"FlatButton"
-theme_override_font_sizes/font_size = 30
-text = " * Potion"
+theme_override_font_sizes/font_size = 11
+text = "Potion"
+
+[node name="Back" parent="CombatCamera/UI/ActionSelection/Options" instance=ExtResource("15_ltxxa")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Back
+"
+
+[node name="BackMenu" type="Control" parent="CombatCamera/UI"]
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(120, 200)
+layout_mode = 2
+
+[node name="BackTexture" type="NinePatchRect" parent="CombatCamera/UI/BackMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.85
+anchor_right = 0.758
+anchor_bottom = 1.0
+offset_right = 0.0400009
+texture = SubResource("AtlasTexture_6uv68")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="Back" parent="CombatCamera/UI/BackMenu" instance=ExtResource("15_ltxxa")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.067
+anchor_top = 0.877
+anchor_right = 0.692
+anchor_bottom = 0.957
+offset_left = -0.04
+offset_top = 0.0999908
+offset_right = -0.0400009
+offset_bottom = 0.0999908
+theme_override_font_sizes/font_size = 11
+text = "Back
+"
 
 [node name="DebugLabel" type="Label" parent="CombatCamera"]
 offset_left = -538.0
@@ -414,24 +492,33 @@ script = ExtResource("14_s53s0")
 [node name="EnemyController" type="Node2D" parent="PawnService"]
 script = ExtResource("16_815gm")
 
-[node name="Dummy" parent="PawnService/EnemyController" groups=["Enemies"] instance=ExtResource("7_4cdsd")]
-modulate = Color(1, 0.760784, 0, 1)
-texture_filter = 6
-position = Vector2(839, 382)
-texture = ExtResource("19_s44jy")
-pawn_name = "Enemy5"
-
 [node name="FastEnmy" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
-position = Vector2(557, 681)
+position = Vector2(761, 702)
 texture = ExtResource("18_g5f8e")
+idle_frames = ExtResource("18_g5f8e")
+attack_frames = ExtResource("21_6bk38")
+unit_type = 1
+
+[node name="FastEnmy2" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
+position = Vector2(561, 761)
+texture = ExtResource("18_g5f8e")
+idle_frames = ExtResource("18_g5f8e")
+attack_frames = ExtResource("21_6bk38")
+unit_type = 1
 
 [node name="ShotEnmy" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
 position = Vector2(158, 641)
 texture = ExtResource("20_ocr5m")
+idle_frames = ExtResource("20_ocr5m")
+attack_frames = ExtResource("20_i5kpb")
+unit_type = 5
 
 [node name="FatEnmy" parent="PawnService/EnemyController" instance=ExtResource("7_4cdsd")]
 position = Vector2(519, 621)
 texture = ExtResource("19_s44jy")
+idle_frames = ExtResource("19_s44jy")
+attack_frames = ExtResource("21_yeor5")
+unit_type = 3
 
 [node name="PlayerController" type="Node2D" parent="PawnService"]
 y_sort_enabled = true
@@ -440,8 +527,80 @@ script = ExtResource("6_e71m8")
 [node name="Player" parent="PawnService/PlayerController" groups=["Allies"] instance=ExtResource("7_4cdsd")]
 position = Vector2(41, -18)
 scale = Vector2(1.10938, 1)
-texture = ExtResource("9_6jath")
-pawn_name = "Willy"
+texture = ExtResource("19_s44jy")
+idle_frames = ExtResource("20_ocr5m")
+attack_frames = ExtResource("20_i5kpb")
+pawn_name = "Kevin"
+unit_type = 1
+DAMAGE = 20
+SPECIAL_DAMAGE = 35
+
+[node name="NeutralMobsController" type="Node2D" parent="PawnService"]
+y_sort_enabled = true
+
+[node name="Player" parent="PawnService/NeutralMobsController" instance=ExtResource("7_4cdsd")]
+position = Vector2(237, 681)
+
+[node name="Player2" parent="PawnService/NeutralMobsController" instance=ExtResource("7_4cdsd")]
+position = Vector2(396, 561)
+
+[node name="Dummy" parent="PawnService/NeutralMobsController" instance=ExtResource("7_4cdsd")]
+modulate = Color(1, 0.760784, 0, 1)
+texture_filter = 6
+position = Vector2(835, 379)
+texture = ExtResource("19_s44jy")
+will_animate = false
+metadata/_edit_group_ = true
+
+[node name="CardBack" type="Sprite2D" parent="PawnService/NeutralMobsController/Dummy"]
+position = Vector2(9, -30)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("22_4dwnm")
+
+[node name="Dummy2" parent="PawnService/NeutralMobsController" instance=ExtResource("7_4cdsd")]
+modulate = Color(1, 0.760784, 0, 1)
+texture_filter = 6
+position = Vector2(715, 759)
+texture = ExtResource("19_s44jy")
+will_animate = false
+metadata/_edit_group_ = true
+
+[node name="CardBack" type="Sprite2D" parent="PawnService/NeutralMobsController/Dummy2"]
+position = Vector2(9, -30)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("22_4dwnm")
+
+[node name="Dummy3" parent="PawnService/NeutralMobsController" instance=ExtResource("7_4cdsd")]
+modulate = Color(1, 0.760784, 0, 1)
+texture_filter = 6
+position = Vector2(594, 779)
+texture = ExtResource("19_s44jy")
+will_animate = false
+metadata/_edit_group_ = true
+
+[node name="CardBack" type="Sprite2D" parent="PawnService/NeutralMobsController/Dummy3"]
+position = Vector2(9, -30)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("22_4dwnm")
+
+[node name="Dummy4" parent="PawnService/NeutralMobsController" instance=ExtResource("7_4cdsd")]
+modulate = Color(1, 0.760784, 0, 1)
+texture_filter = 6
+position = Vector2(714, 679)
+texture = ExtResource("19_s44jy")
+will_animate = false
+metadata/_edit_group_ = true
+
+[node name="CardBack" type="Sprite2D" parent="PawnService/NeutralMobsController/Dummy4"]
+position = Vector2(9, -30)
+scale = Vector2(0.95, 0.95)
+texture = ExtResource("22_4dwnm")
+
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(469, 412)
+scale = Vector2(2, 2)
+texture = ExtResource("3_sox54")
 
 [connection signal="new_turn" from="TurnService" to="." method="_on_new_turn"]
 [connection signal="camera_move_finished" from="CombatCamera" to="." method="_on_combat_camera_camera_move_finished"]
@@ -449,3 +608,6 @@ pawn_name = "Willy"
 [connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Move" to="." method="_on_move_button_down"]
 [connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Action" to="." method="_on_action_button_down"]
 [connection signal="button_down" from="CombatCamera/UI/ActionsMenu/Options/Skip" to="." method="_player_skip_turn"]
+[connection signal="button_down" from="CombatCamera/UI/ActionSelection/Options/Attack" to="." method="_on_attack_button_down"]
+[connection signal="button_down" from="CombatCamera/UI/ActionSelection/Options/Back" to="." method="_on_action_selection_back"]
+[connection signal="button_down" from="CombatCamera/UI/BackMenu/Back" to="." method="_on_back_button"]
